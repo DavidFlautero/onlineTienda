@@ -1,35 +1,22 @@
 <?php
-include '../config/db.php'; // Conexión a la base de datos
+// Incluye el archivo de configuración de la base de datos
+require_once __DIR__ . '/../../config/db.php';
 
-// Obtiene la categoría desde la URL
-$categoria = isset($_GET['categoria']) ? $_GET['categoria'] : '';
-
-// Consulta para obtener productos de la categoría seleccionada
-if ($categoria) {
-    $query = "SELECT * FROM tbl_productos WHERE categoria = '$categoria'";
-} else {
-    $query = "SELECT * FROM tbl_productos"; // Si no hay categoría, muestra todos los productos
+// Verifica si $conexion está definida
+if (!isset($conexion)) {
+    die("Error: No se pudo establecer la conexión a la base de datos.");
 }
-
-$resultado = $conexion->query($query);
 ?>
-
-<?php include 'partials/header.php'; ?>
-
-<section class="productos">
-    <h2><?php echo $categoria ? ucfirst($categoria) : 'Nuestros Productos'; ?></h2>
-    <div class="productos-grid">
-        <?php
-        while ($producto = $resultado->fetch_assoc()) {
-            echo '<div class="producto">';
-            echo '<img src="assets/images/' . $producto['imagen'] . '" alt="' . $producto['nombre'] . '">';
-            echo '<h3>' . $producto['nombre'] . '</h3>';
-            echo '<p>$' . $producto['precio'] . '</p>';
-            echo '<a href="detalle_producto.php?id=' . $producto['id'] . '">Ver Detalle</a>';
-            echo '</div>';
-        }
-        ?>
-    </div>
-</section>
-
-<?php include 'partials/footer.php'; ?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda Freelancer</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Tienda Freelancer</h1>
+        <?php include __DIR__ . '/navbar.php'; ?>
+    </header>

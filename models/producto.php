@@ -102,6 +102,16 @@ class Producto {
         $producto = $this->db->query($sql);
         return $producto->fetch_object();
     }
+	
+	public function getSelectProducto() {
+    $sql = "SELECT * FROM tbl_productos WHERE id_producto = {$this->getId_producto()};";
+    $producto = $this->db->query($sql);
+    return $producto->fetch_object();}
+
+	public function getProductosByCategoria() {
+    $sql = "SELECT * FROM tbl_productos WHERE id_categoria = {$this->getId_categoria()} AND id_producto != {$this->getId_producto()} LIMIT 4;";
+    $productos = $this->db->query($sql);
+    return $productos;}
 
     // Obtener productos de una categoría específica
     public function getProductosByCategoria() {
