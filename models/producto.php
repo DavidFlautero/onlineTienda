@@ -1,6 +1,5 @@
 <?php
-
-class Producto{
+class Producto {
     private $id_producto;
     private $id_categoria;
     private $nombre_producto;
@@ -10,12 +9,14 @@ class Producto{
     private $oferta_producto;
     private $fecha_producto;
     private $imagen_producto;
-    private $db; 
-    
+    private $db;
+
+    // Constructor: establece la conexión a la base de datos
     public function __construct() {
-        $this->db = DataBase::connect();
+        $this->db = Database::connect();
     }
-    
+
+    // Getters y Setters
     public function getId_producto() {
         return $this->id_producto;
     }
@@ -53,109 +54,127 @@ class Producto{
     }
 
     public function setId_producto($id_producto) {
-        $this->id_producto = $id_producto;
-        return $this;
+        $this->id_producto = $this->db->real_escape_string($id_producto);
     }
 
     public function setId_categoria($id_categoria) {
-        $this->id_categoria = $id_categoria;
-        return $this;
+        $this->id_categoria = $this->db->real_escape_string($id_categoria);
     }
 
     public function setNombre_producto($nombre_producto) {
-        $this->nombre_producto = $nombre_producto;
-        return $this;
+        $this->nombre_producto = $this->db->real_escape_string($nombre_producto);
     }
 
     public function setDescripcion_producto($descripcion_producto) {
-        $this->descripcion_producto = $descripcion_producto;
-        return $this;
+        $this->descripcion_producto = $this->db->real_escape_string($descripcion_producto);
     }
 
     public function setPrecio_producto($precio_producto) {
-        $this->precio_producto = $precio_producto;
-        return $this;
+        $this->precio_producto = $this->db->real_escape_string($precio_producto);
     }
 
     public function setStock_producto($stock_producto) {
-        $this->stock_producto = $stock_producto;
-        return $this;
+        $this->stock_producto = $this->db->real_escape_string($stock_producto);
     }
 
     public function setOferta_producto($oferta_producto) {
-        $this->oferta_producto = $oferta_producto;
-        return $this;
+        $this->oferta_producto = $this->db->real_escape_string($oferta_producto);
     }
 
     public function setFecha_producto($fecha_producto) {
-        $this->fecha_producto = $fecha_producto;
-        return $this;
+        $this->fecha_producto = $this->db->real_escape_string($fecha_producto);
     }
 
     public function setImagen_producto($imagen_producto) {
-        $this->imagen_producto = $imagen_producto;
-        return $this;
+        $this->imagen_producto = $this->db->real_escape_string($imagen_producto);
     }
 
-    public function getProducto(){
-        $sql="SELECT id_producto, nombre_categoria, nombre_producto, descripcion_producto, precio_producto , stock_producto , oferta_producto ,fecha_producto , imagen_producto 
-        FROM TBL_Productos as tp , TBL_Categorias as tc 
-        WHERE tp.id_categoria  = tc.id_categoria 
-        ORDER BY id_producto DESC;";
+    // Obtener todos los productos
+    public function getAll() {
+        $sql = "SELECT * FROM tbl_productos ORDER BY id_producto DESC;";
         $productos = $this->db->query($sql);
         return $productos;
     }
-    
-    public function getProductosForCat(){
-        $sql="SELECT id_producto, nombre_categoria, nombre_producto, descripcion_producto, precio_producto , stock_producto , oferta_producto ,fecha_producto , imagen_producto 
-        FROM TBL_Productos as tp , TBL_Categorias as tc 
-        WHERE tp.id_categoria  = tc.id_categoria AND
-        tp.id_categoria = {$this->getId_categoria()}
-        ORDER BY id_producto DESC;";
-        $productos = $this->db->query($sql);
-        return $productos;
-    }
-    
-    
-    public function getSelectProducto(){
-        $sql="SELECT * FROM TBL_Productos WHERE id_producto = {$this->getId_producto()} ORDER BY id_producto DESC;";
+
+    // Obtener un producto específico por su ID
+    public function getOne() {
+        $sql = "SELECT * FROM tbl_productos WHERE id_producto = {$this->getId_producto()};";
         $producto = $this->db->query($sql);
-        $producto = $producto->fetch_object();
-        return $producto;
+        return $producto->fetch_object();
     }
-    
-    
+
+    // Obtener productos de una categoría específica
+    public function getProductosByCategoria() {
+        $sql = "SELECT p.* FROM tbl_productos p "
+             . "INNER JOIN tbl_categorias c ON p.id_categoria = c.id_categoria "
+             . "WHERE c.id_categoria = {$this->getId_categoria()} "
+             . "ORDER BY p.nombre_producto ASC;";
+        $productos = $this->db->query($sql);
+        return $productos;
+    }
+
+    // Obtener productos destacados
+    public function getDestacados() {
+        $sql = "SELECT * FROM tbl_productos WHERE oferta_producto = 'si' ORDER BY RAND() LIMIT 6;";
+        $productos = $this->db->query($sql);
+        return $productos;
+    }
+
+    // Guardar un nuevo producto
     public function save() {
-        $sql = "INSERT INTO tbl_productos (id_categoria,nombre_producto, descripcion_producto, precio_producto, stock_producto, oferta_producto, fecha_producto, imagen_producto) VALUES('{$this->getId_categoria()}', '{$this->getNombre_producto()}', '{$this->getDescripcion_producto()}', '{$this->getPrecio_producto()}', '{$this->getStock_producto()}', '{$this->getOferta_producto()}', '{$this->getFecha_producto()}', '{$this->getImagen_producto()}');";
+        $sql = "INSERT INTO tbl_productos VALUES (NULL, {$this->getId_categoria()}, '{$this->getNombre_producto()}', '{$this->getDescripcion_producto()}', {$this->getPrecio_producto()}, {$this->getStock_producto()}, '{$this->getOferta_producto()}', CURDATE(), '{$this->getImagen_producto()}');";
         $save = $this->db->query($sql);
-        $result = false; 
-        if ($save){
-            $result = true;
+
+        if ($save) {
+            return true;
+        } else {
+            return false;
         }
-        return $result;
     }
-    
-    public function delete(){
-        $sql = "DELETE FROM tbl_productos WHERE id_producto = {$this->id_producto}";
+
+    // Actualizar un producto existente
+    public function update() {
+        $sql = "UPDATE tbl_productos SET "
+             . "id_categoria = {$this->getId_categoria()}, "
+             . "nombre_producto = '{$this->getNombre_producto()}', "
+             . "descripcion_producto = '{$this->getDescripcion_producto()}', "
+             . "precio_producto = {$this->getPrecio_producto()}, "
+             . "stock_producto = {$this->getStock_producto()}, "
+             . "oferta_producto = '{$this->getOferta_producto()}', "
+             . "imagen_producto = '{$this->getImagen_producto()}' "
+             . "WHERE id_producto = {$this->getId_producto()};";
+        $update = $this->db->query($sql);
+
+        if ($update) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // Eliminar un producto
+    public function delete() {
+        $sql = "DELETE FROM tbl_productos WHERE id_producto = {$this->getId_producto()};";
         $delete = $this->db->query($sql);
-        $result = false; 
-        if ($delete){
-            $result = true;
+
+        if ($delete) {
+            return true;
+        } else {
+            return false;
         }
-        return $result;
-    }
-    
-    public function edit(){
-        $sql = "UPDATE tbl_productos SET id_categoria = '{$this->getId_categoria()}', nombre_producto = '{$this->getNombre_producto()}', descripcion_producto = '{$this->getDescripcion_producto()}', precio_producto = '{$this->getPrecio_producto()}', stock_producto = '{$this->getStock_producto()}', oferta_producto = '{$this->getOferta_producto()}', fecha_producto = '{$this->getFecha_producto()}', imagen_producto = '{$this->getImagen_producto()}' WHERE id_producto = {$this->getId_producto()}";
-        $save = $this->db->query($sql);
-        $result = false; 
-        if ($save){
-            $result = true;
-        }
-        return $result;
     }
 
-    
+    // Obtener productos en oferta
+    public function getOfertas() {
+        $sql = "SELECT * FROM tbl_productos WHERE oferta_producto = 'si' ORDER BY RAND() LIMIT 6;";
+        $ofertas = $this->db->query($sql);
+        return $ofertas;
+    }
+
+    // Obtener productos aleatorios (para secciones como "Productos recomendados")
+    public function getRandom($limit = 6) {
+        $sql = "SELECT * FROM tbl_productos ORDER BY RAND() LIMIT $limit;";
+        $productos = $this->db->query($sql);
+        return $productos;
+    }
 }
-
-?>
