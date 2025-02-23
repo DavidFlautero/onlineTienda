@@ -1,61 +1,68 @@
-<?php
-// Inicia la sesión
-session_start();
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda Online - Mayorisander</title>
+    <link rel="stylesheet" href="./assets/css/styles.css">
+</head>
+<body>
+    <!-- Encabezado -->
+    <header>
+        <div class="logo">
+            <img src="img/logo.png" alt="Logo de Mayorisander">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="pages/productos.html">Productos</a></li>
+                <li><a href="pages/login.html">Iniciar Sesión</a></li>
+            </ul>
+        </nav>
+    </header>
 
-// Incluye los archivos necesarios
-require_once 'autoload.php'; // Carga automática de clases
-require_once 'config/db.php'; // Configuración de la base de datos
-require_once 'config/parameters.php'; // Parámetros globales
-require_once 'helpers/utils.php'; // Funciones útiles
-require_once 'controllers/ErrorController.php'; // Funciones útiles
+    <!-- Contenido principal -->
+    <main>
+        <section class="banner">
+            <h1>Bienvenido a Mayorisander</h1>
+            <p>Tu tienda online de confianza</p>
+            <a href="pages/productos.html" class="btn">Ver Productos</a>
+        </section>
 
-// Incluye la cabecera
-require_once 'views/partials/header.php'; // Ruta corregida
+        <section class="destacados">
+            <h2>Productos Destacados</h2>
+            <div class="productos">
+                <div class="producto">
+                    <img src="img/producto1.jpg" alt="Producto 1">
+                    <h3>Producto 1</h3>
+                    <p>Descripción breve del producto.</p>
+                    <span class="precio">$20.00</span>
+                    <button>Añadir al carrito</button>
+                </div>
+                <div class="producto">
+                    <img src="img/producto2.jpg" alt="Producto 2">
+                    <h3>Producto 2</h3>
+                    <p>Descripción breve del producto.</p>
+                    <span class="precio">$25.00</span>
+                    <button>Añadir al carrito</button>
+                </div>
+                <div class="producto">
+                    <img src="img/producto3.jpg" alt="Producto 3">
+                    <h3>Producto 3</h3>
+                    <p>Descripción breve del producto.</p>
+                    <span class="precio">$30.00</span>
+                    <button>Añadir al carrito</button>
+                </div>
+            </div>
+        </section>
+    </main>
 
-// Función para mostrar errores
-function show_error() {
-    // Crea una instancia del controlador de errores
-    $error = new ErrorController();
-    $error->index();
-    // Redirige a la página principal
-    header("Location: " . base_url);
-    exit();
-}
+    <!-- Pie de página -->
+    <footer>
+        <p>&copy; 2023 Mayorisander. Todos los derechos reservados.</p>
+    </footer>
 
-// Verifica si se ha especificado un controlador
-if (isset($_GET['controller'])) {
-    $nombre_controlador = $_GET['controller'] . 'Controller';
-} elseif (!isset($_GET['controller']) && !isset($_GET['action'])) {
-    // Si no se especifica un controlador ni una acción, usa el controlador por defecto
-    $nombre_controlador = controller_default;
-} else {
-    // Si no se cumple ninguna condición, muestra un error
-    show_error();
-    exit();
-}
-
-// Verifica si la clase del controlador existe
-if (class_exists($nombre_controlador)) {
-    // Crea una instancia del controlador
-    $controlador = new $nombre_controlador();
-
-    // Verifica si se ha especificado una acción y si existe en el controlador
-    if (isset($_GET['action']) && method_exists($controlador, $_GET['action'])) {
-        $action = $_GET['action'];
-        $controlador->$action();
-    } elseif (!isset($_GET['controller']) && !isset($_GET['action'])) {
-        // Si no se especifica una acción, usa la acción por defecto
-        $action_default = action_default;
-        $controlador->$action_default();
-    } else {
-        // Si no se cumple ninguna condición, muestra un error
-        show_error();
-    }
-} else {
-    // Si el controlador no existe, muestra un error
-    show_error();
-}
-
-// Incluye el pie de página
-require_once 'views/partials/footer.php'; // Ruta corregida
-?>
+    <!-- Enlace al archivo JavaScript -->
+    <script src="js/script.js"></script>
+</body>
+</html>

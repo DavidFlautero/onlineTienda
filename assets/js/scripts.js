@@ -1,159 +1,179 @@
-// Función para agregar un producto al carrito
-function addToCart(producto_id) {
-    fetch(`${base_url}carrito/add&id_producto=${producto_id}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                alert('Producto agregado al carrito');
-                updateCartCount(data.cart_count);
-            } else {
-                alert('Error al agregar el producto al carrito');
-            }
-        })
-        .catch(error => console.error('Error:', error));
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #F4F4F4;
+    color: #333333;
+    line-height: 1.6;
 }
 
-// Función para actualizar el contador del carrito
-function updateCartCount(count) {
-    const cartCount = document.getElementById('cart-count');
-    if (cartCount) {
-        cartCount.textContent = count;
+/* Encabezado */
+header {
+    background-color: #1A2A3A;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+header .logo img {
+    height: 50px;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+nav ul li {
+    margin-left: 20px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: #FF6B35;
+}
+
+/* Banner */
+.banner {
+    background-color: #1A2A3A;
+    color: #fff;
+    text-align: center;
+    padding: 60px 20px;
+    margin-bottom: 30px;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.banner h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+}
+
+.banner p {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+}
+
+.banner .btn {
+    background-color: #FF6B35;
+    color: #fff;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.banner .btn:hover {
+    background-color: #E65A2B;
+}
+
+/* Productos destacados */
+.destacados {
+    padding: 20px;
+    text-align: center;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.destacados h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #1A2A3A;
+}
+
+.productos {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.producto {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    width: 30%;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.producto:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.producto img {
+    max-width: 100%;
+    border-radius: 10px;
+}
+
+.producto h3 {
+    font-size: 1.5em;
+    margin: 10px 0;
+    color: #1A2A3A;
+}
+
+.producto p {
+    font-size: 1em;
+    color: #666;
+}
+
+.producto .precio {
+    font-size: 1.2em;
+    color: #FF6B35;
+    font-weight: bold;
+}
+
+.producto button {
+    background-color: #FF6B35;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.producto button:hover {
+    background-color: #E65A2B;
+}
+
+/* Pie de página */
+footer {
+    background-color: #1A2A3A;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 40px;
+}
+
+footer p {
+    margin: 0;
+    font-size: 0.9em;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
     }
 }
 
-// Función para eliminar un producto del carrito
-function removeFromCart(indice) {
-    fetch(`${base_url}carrito/remove&indice=${indice}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                alert('Producto eliminado del carrito');
-                location.reload(); // Recargar la página para actualizar el carrito
-            } else {
-                alert('Error al eliminar el producto del carrito');
-            }
-        })
-        .catch(error => console.error('Error:', error));
+/* Transiciones */
+button, a {
+    transition: all 0.3s ease;
 }
-
-// Función para aumentar la cantidad de un producto en el carrito
-function increaseQuantity(indice) {
-    fetch(`${base_url}carrito/up&indice=${indice}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                location.reload(); // Recargar la página para actualizar el carrito
-            } else {
-                alert('Error al aumentar la cantidad');
-            }
-        })
-        .catch(error => console.error('Error:', error));
-}
-
-// Función para disminuir la cantidad de un producto en el carrito
-function decreaseQuantity(indice) {
-    fetch(`${base_url}carrito/down&indice=${indice}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                location.reload(); // Recargar la página para actualizar el carrito
-            } else {
-                alert('Error al disminuir la cantidad');
-            }
-        })
-        .catch(error => console.error('Error:', error));
-}
-
-// Función para vaciar el carrito
-function clearCart() {
-    fetch(`${base_url}carrito/delete_all`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                alert('Carrito vaciado correctamente');
-                location.reload(); // Recargar la página para actualizar el carrito
-            } else {
-                alert('Error al vaciar el carrito');
-            }
-        })
-        .catch(error => console.error('Error:', error));
-}
-
-// Validación del formulario de registro
-document.addEventListener('DOMContentLoaded', function () {
-    const registroForm = document.getElementById('registro-form');
-    if (registroForm) {
-        registroForm.addEventListener('submit', function (e) {
-            const nombre = document.getElementById('nombre').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const password = document.getElementById('password').value.trim();
-
-            if (nombre === '' || email === '' || password === '') {
-                e.preventDefault();
-                alert('Todos los campos son obligatorios');
-            }
-        });
-    }
-});
-
-// Validación del formulario de login
-document.addEventListener('DOMContentLoaded', function () {
-    const loginForm = document.getElementById('login-form');
-    if (loginForm) {
-        loginForm.addEventListener('submit', function (e) {
-            const email = document.getElementById('username').value.trim();
-            const password = document.getElementById('password').value.trim();
-
-            if (email === '' || password === '') {
-                e.preventDefault();
-                alert('Todos los campos son obligatorios');
-            }
-        });
-    }
-});
-
-// Validación del formulario de reclamo
-document.addEventListener('DOMContentLoaded', function () {
-    const reclamoForm = document.getElementById('reclamo-form');
-    if (reclamoForm) {
-        reclamoForm.addEventListener('submit', function (e) {
-            const descripcion = document.getElementById('descripcion').value.trim();
-            const imagen = document.getElementById('imagen').files[0];
-            const video = document.getElementById('video').files[0];
-
-            if (descripcion === '') {
-                e.preventDefault();
-                alert('La descripción es obligatoria');
-            }
-
-            if (!imagen && !video) {
-                e.preventDefault();
-                alert('Debes subir al menos una imagen o un video');
-            }
-        });
-    }
-});
-
-// Mostrar/ocultar el menú en dispositivos móviles
-document.addEventListener('DOMContentLoaded', function () {
-    const menuToggle = document.getElementById('menu-toggle');
-    const navbarNav = document.getElementById('navbarNav');
-
-    if (menuToggle && navbarNav) {
-        menuToggle.addEventListener('click', function () {
-            navbarNav.classList.toggle('show');
-        });
-    }
-});
-
-// Actualizar el contador del carrito al cargar la página
-document.addEventListener('DOMContentLoaded', function () {
-    fetch(`${base_url}carrito/getCount`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                updateCartCount(data.cart_count);
-            }
-        })
-        .catch(error => console.error('Error:', error));
-});

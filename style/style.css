@@ -1,171 +1,143 @@
-
-/* 
-    Created on : 14-abr-2020, 23:01:09
-    Author     : ba3
-*/
-
-/*body * {
-    border: 1px solid red;
-}*/
-
-.logo{
-    width: 30%;
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
 }
 
-a:hover{
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .logo img {
+    height: 50px;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+nav ul li {
+    margin-left: 20px;
+}
+
+nav ul li a {
+    color: #fff;
     text-decoration: none;
+    font-weight: bold;
 }
 
-.m-op{
-    padding: 15px 10px 10px 10px;
+nav ul li a:hover {
+    text-decoration: underline;
 }
 
-.m-op:hover{
-    border-bottom: 2px solid #fff;
-}
-
-.form-login{
-    width: 70% !important;
-}
-.pad-left{
-    padding-left: 10px;
-}
-
-.dvhead{
-   width: 100%;
-   height: 50px;
-   text-align: right;
-   padding: 5px;
-   background: #05C7F2;
- 
-}
-
-.dvhead > a{
+/* Banner */
+.banner {
+    background-color: #007bff;
     color: #fff;
-}
-
-.pdtop{
-    padding-top: 27px;
-}
-.dvleft{
-    text-align: left;
-}
-.dvrigh{
-    text-align: right;
-    color: #05C7F2;
-}
-.dvrow{
-    padding: 10px 10px 10px 10px;
-}
-
-footer{
-    background: #0D0D0D;
-    color: #F2F2F2;
-}
-
-.banner-index{
- width: 100%;
-}
-.categori-index{
-    border: 5px solid #fff;
-}
-
-.div-shadow{
-    overflow: hidden;
-    box-shadow: 0px 0px 1px rgba(0,0,0,1);
-	-webkit-transform:translateX(0);
-}
-.ofert{
-    width: 85%;
-    z-index: 99;
-    position: absolute;
-    background: #fd7e14;
-    opacity: 0.7;
-    clear: both;
-    display: inline-block;
-}
-
-.div-shadow:hover{
- box-shadow: 0px 0px 38px rgba(0,0,0,1);
- -webkit-transition-duration:2s ;
-	   -moz-transition-duration:2s ;
-	    -ms-transition-duration:2s ;
-	     -o-transition-duration:2s ;
-	        transition-duration:2s ;  
-}
-
-footer{
-    margin-top: 50px;
-    width: 100%;
-    height: 50px;
-    background: #F2F2F2;
-    color: #000;
-    text-align:center;
-    padding: 10px 10px 10px 10px;
-}
-.btn-comprar{
-    width: 100%;
-}
-
-.error-oops{
     text-align: center;
-    display: inline-block;
-    padding: 15px 30px;
-    display: inline-block;
-    vertical-align: middle;
-}
-.img-top-pad{
-    padding: 20px; 
+    padding: 50px 20px;
 }
 
-.btn-facebook{
-    background: #2d4373;
-    border-color: #2d4373;
-    border:1px solid;
-    color: #fff;
+.banner h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
 }
 
-.btn-gmail{
-    background: #dd4b39;
-    border-color: #dd4b39;
-    border:1px solid;
-    color: #fff;
+.banner p {
+    font-size: 1.2em;
+    margin-bottom: 20px;
 }
-.pad-center-vertical{
+
+.banner .btn {
+    background-color: #fff;
+    color: #007bff;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.banner .btn:hover {
+    background-color: #f4f4f4;
+}
+
+/* Productos destacados */
+.destacados {
+    padding: 20px;
     text-align: center;
-    display: inline-block;
-    padding: 250px 30px;
-    display: inline-block;
-    vertical-align: middle;
 }
 
-.col-controlls{
-    width: 100%;
-    padding: 20px 20px 20px 20px;
+.destacados h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
 }
 
-
-.sep-top{
-    padding-top: 30px;
-}
-.sep-but{
-    padding-bottom: 30px;
+.productos {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
 }
 
-.img-product-list{
-    width: 50px;
-    height: 50px;
-}
-td{
-    font-size: 12px;
+.producto {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    width: 30%;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.img-carrito{
-    width: 20%;
+.producto img {
+    max-width: 100%;
+    border-radius: 5px;
 }
-.carpro{
-    color: red;
+
+.producto h3 {
+    font-size: 1.5em;
+    margin: 10px 0;
 }
-.unid_font{
-    font-size: 19px;
+
+.producto p {
+    font-size: 1em;
+    color: #666;
+}
+
+.producto .precio {
+    font-size: 1.2em;
+    color: #007bff;
+    font-weight: bold;
+}
+
+.producto button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.producto button:hover {
+    background-color: #0056b3;
+}
+
+/* Pie de página */
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: 20px;
 }
