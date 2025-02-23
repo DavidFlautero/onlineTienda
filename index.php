@@ -7,6 +7,7 @@ require_once 'autoload.php'; // Carga automática de clases
 require_once 'config/db.php'; // Configuración de la base de datos
 require_once 'config/parameters.php'; // Parámetros globales
 require_once 'helpers/utils.php'; // Funciones útiles
+require_once 'controllers/ErrorController.php'; // Funciones útiles
 
 // Incluye la cabecera
 require_once 'views/partials/header.php'; // Ruta corregida
