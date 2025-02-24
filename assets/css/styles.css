@@ -217,31 +217,31 @@ header nav ul li a:hover {
 /* Estilos del slider */
 .slider {
     width: 100%;
-    max-width: 1200px; /* Ajusta el ancho máximo del slider */
+    max-width: 1200px;
     margin: 0 auto;
-    overflow: hidden; /* Oculta el contenido que se desborda */
+    overflow: hidden;
     position: relative;
 }
 
 .slider img {
-    width: 100%; /* Las imágenes ocupan el 100% del ancho del contenedor */
-    height: auto; /* Mantiene la proporción de la imagen */
-    display: block; /* Elimina el espacio adicional debajo de la imagen */
+    width: 100%;
+    height: auto;
+    display: block;
 }
 
 /* Flechas de navegación */
 .slick-prev, .slick-next {
     font-size: 24px;
     color: #000;
-    z-index: 1; /* Asegura que las flechas estén sobre las imágenes */
+    z-index: 1;
 }
 
 .slick-prev {
-    left: 20px; /* Posición de la flecha izquierda */
+    left: 20px;
 }
 
 .slick-next {
-    right: 20px; /* Posición de la flecha derecha */
+    right: 20px;
 }
 
 .slick-prev:hover, .slick-next:hover {

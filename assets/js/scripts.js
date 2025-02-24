@@ -6,7 +6,7 @@ $(document).ready(function() {
         dots: true,              // Muestra los puntos de navegación
         arrows: true,            // Muestra flechas de navegación
         infinite: true,          // Desplazamiento infinito
-        speed: 500,              // Velocidad de transición
+        speed: 900,              // Velocidad de transición
         slidesToShow: 1,         // Número de slides visibles
         slidesToScroll: 1        // Número de slides a desplazar
     });
