@@ -7,12 +7,20 @@
     <link rel="stylesheet" href="./assets/css/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Dependencias de Slick Slider -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
 </head>
 <body>
     <!-- Encabezado -->
     <header>
         <div class="logo">
             <img src="assets/images/logo.png" alt="Logo de Mayorisander">
+        </div>
+        <!-- Barra de búsqueda -->
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Buscar producto...">
+            <div id="search-results"></div> <!-- Aquí se mostrarán las sugerencias -->
         </div>
         <nav>
             <ul>
@@ -24,11 +32,42 @@
         </nav>
     </header>
 
-    <!-- Banner principal -->
-    <section class="banner">
-        <h1>Bienvenido a Mayorisander</h1>
-        <p>Tu tienda online de confianza</p>
-        <a href="pages/productos.php" class="btn">Ver Productos</a>
+    <!-- Slider -->
+    <section class="slider">
+        <div><img src="assets/images/slider1.png" alt="Slide 1"></div>
+        <div><img src="assets/images/slider2.png" alt="Slide 2"></div>
+        <div><img src="assets/images/slider3.png" alt="Slide 3"></div>
+    </section>
+
+    <!-- Sección de Servicios -->
+    <section class="services-grid">
+        <!-- ¿CÓMO COMPRAR? -->
+        <div class="service-item">
+            <img src="assets/icons/como-comprar.png" alt="¿CÓMO COMPRAR?">
+            <h3>¿CÓMO COMPRAR?</h3>
+            <a href="#">Ver más</a>
+        </div>
+
+        <!-- ENVÍOS A TODO EL PAÍS -->
+        <div class="service-item">
+            <img src="assets/icons/envios.png" alt="ENVÍOS A TODO EL PAÍS">
+            <h3>ENVÍOS A TODO EL PAÍS</h3>
+            <a href="#">Ver más</a>
+        </div>
+
+        <!-- MEDIOS DE PAGO -->
+        <div class="service-item">
+            <img src="assets/icons/medios-pago.png" alt="MEDIOS DE PAGO">
+            <h3>MEDIOS DE PAGO</h3>
+            <a href="#">Ver todos</a>
+        </div>
+
+        <!-- DESCUENTOS VIGENTES -->
+        <div class="service-item">
+            <img src="assets/icons/descuentos.png" alt="DESCUENTOS VIGENTES">
+            <h3>DESCUENTOS VIGENTES</h3>
+            <a href="#">Ver todos</a>
+        </div>
     </section>
 
     <!-- Productos destacados -->
@@ -64,7 +103,10 @@
         <p>&copy; 2023 Mayorisander. Todos los derechos reservados.</p>
     </footer>
 
+    <!-- Dependencias de jQuery y Slick Slider -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <!-- Enlace al archivo JavaScript -->
-    <script src="assets/js/script.js"></script>
+    <script src="./assets/js/scripts.js"></script>
 </body>
 </html>
