@@ -34,6 +34,26 @@ class ProductoController {
             header("Location:" . base_url);
         }
     }
+	public function listCategories() {
+    // Conectar a la base de datos
+    $conexion = new mysqli("localhost", "usuario", "contraseña", "basedatos");
+
+    // Consulta para obtener todas las categorías
+    $query = "SELECT * FROM tbl_categorias";
+    $result = $conexion->query($query);
+
+    // Mostrar categorías
+    echo '<div class="categorias">';
+    while ($categoria = $result->fetch_assoc()) {
+        echo '<div class="categoria">';
+        echo '<h3>' . $categoria['nombre_categoria'] . '</h3>';
+        echo '</div>';
+    }
+    echo '</div>';
+
+    // Cerrar conexión
+    $conexion->close();
+}
 
     // Otros métodos (gestion, crear, save, editar, eliminar, etc.)
 }
