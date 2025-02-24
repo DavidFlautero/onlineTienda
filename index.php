@@ -6,6 +6,7 @@
     <title>Mayorisander - Tienda Online</title>
     <link rel="stylesheet" href="./assets/css/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome para los íconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- Dependencias de Slick Slider -->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
@@ -43,28 +44,28 @@
     <section class="services-grid">
         <!-- ¿CÓMO COMPRAR? -->
         <div class="service-item">
-            <img src="assets/icons/como-comprar.png" alt="¿CÓMO COMPRAR?">
+            <i class="fas fa-shopping-cart" style="color: red; font-size: 24px;"></i>
             <h3>¿CÓMO COMPRAR?</h3>
             <a href="#">Ver más</a>
         </div>
 
         <!-- ENVÍOS A TODO EL PAÍS -->
         <div class="service-item">
-            <img src="assets/icons/envios.png" alt="ENVÍOS A TODO EL PAÍS">
+            <i class="fas fa-truck" style="color: red; font-size: 24px;"></i>
             <h3>ENVÍOS A TODO EL PAÍS</h3>
             <a href="#">Ver más</a>
         </div>
 
         <!-- MEDIOS DE PAGO -->
         <div class="service-item">
-            <img src="assets/icons/medios-pago.png" alt="MEDIOS DE PAGO">
+            <i class="fas fa-credit-card" style="color: red; font-size: 24px;"></i>
             <h3>MEDIOS DE PAGO</h3>
             <a href="#">Ver todos</a>
         </div>
 
         <!-- DESCUENTOS VIGENTES -->
         <div class="service-item">
-            <img src="assets/icons/descuentos.png" alt="DESCUENTOS VIGENTES">
+            <i class="fas fa-tag" style="color: red; font-size: 24px;"></i>
             <h3>DESCUENTOS VIGENTES</h3>
             <a href="#">Ver todos</a>
         </div>
@@ -98,15 +99,13 @@
         </div>
     </section>
 
-    <!-- Pie de página -->
-    <footer>
-        <p>&copy; 2023 Mayorisander. Todos los derechos reservados.</p>
-    </footer>
+    <!-- Incluye el Footer -->
+    <?php include 'views/partials/footer.php'; ?>
 
     <!-- Dependencias de jQuery y Slick Slider -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <!-- Enlace al archivo JavaScript -->
-    <script src="./assets/js/scripts.js"></script>
+    <script src="assets/js/script.js"></script>
 </body>
 </html>

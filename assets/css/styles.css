@@ -275,13 +275,87 @@ header nav ul li a:hover {
 }
 
 /* Pie de página */
+/* Estilos del footer */
 footer {
-    text-align: center;
-    padding: 20px;
-    background-color: #333;
+    background-color: #1A2A3A;
     color: #fff;
+    padding: 40px 20px;
+    font-family: 'Roboto', sans-serif;
 }
 
-footer p {
-    margin: 0;
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
 }
+
+.footer-section {
+    flex: 1;
+    min-width: 200px;
+    margin: 10px;
+}
+
+.footer-section h4 {
+    font-size: 18px;
+    margin-bottom: 15px;
+    color: #FF6B35;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section ul li {
+    margin-bottom: 10px;
+}
+
+.footer-section ul li a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+    color: #FF6B35;
+}
+
+.footer-section p {
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.btn {
+    display: inline-block;
+    background-color: #FF6B35;
+    color: #fff;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #E65A2B;
+}
+
+.social-icons {
+    display: flex;
+    gap: 10px;
+}
+
+.social-icons a {
+    color: #fff;
+    font-size: 24px;
+    transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+    color: #FF6B35;
+}
+
+.arrepentimiento {
+    text
