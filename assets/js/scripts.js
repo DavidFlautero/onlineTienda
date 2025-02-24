@@ -1,6 +1,5 @@
-// Inicializa el slider con Slick
 $(document).ready(function() {
-    // Configuración del slider
+    // Inicializa el slider con Slick
     $('.slider').slick({
         autoplay: true,          // Reproducción automática
         dots: true,              // Muestra los puntos de navegación
@@ -36,8 +35,10 @@ $(document).ready(function() {
 
     // Función para añadir productos al carrito
     window.añadirAlCarrito = function(nombre, precio) {
-        // Aquí puedes agregar la lógica para añadir el producto al carrito
-        console.log(`Producto añadido: ${nombre} - $${precio}`);
+        const producto = { nombre, precio };
+        let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+        carrito.push(producto);
+        localStorage.setItem('carrito', JSON.stringify(carrito));
         alert(`¡${nombre} añadido al carrito!`);
     };
 
