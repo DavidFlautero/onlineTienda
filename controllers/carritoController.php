@@ -5,21 +5,22 @@ class CarritoController {
 
     // Método para mostrar el carrito de compras
     public function index() {
-        // Verifica si hay productos en el carrito
-        var_dump($_SESSION['carrito']); // Depuración
-        die(); // Detiene la ejecución para ver el resultado
-    
-        // Obtener los productos del carrito desde la sesión
-        $carrito = isset($_SESSION['carrito']) ? $_SESSION['carrito'] : array();
-    
-        // Obtener productos de reemplazo para cada producto en el carrito
-        foreach ($carrito as &$producto) {
-            if ($producto['stock_producto'] == 0) {
-                $productoModel = new Producto();
-                $producto['reemplazos'] = $productoModel->getProductosSimilares($producto['id_producto']);
+        // Verificar si hay productos en el carrito
+        if (!isset($_SESSION['carrito']) || empty($_SESSION['carrito'])) {
+            $_SESSION['carrito_vacio'] = "Tu carrito está vacío.";
+        } else {
+            // Obtener los productos del carrito desde la sesión
+            $carrito = $_SESSION['carrito'];
+
+            // Obtener productos de reemplazo para cada producto en el carrito
+            foreach ($carrito as &$producto) {
+                if ($producto['stock_producto'] == 0) {
+                    $productoModel = new Producto();
+                    $producto['reemplazos'] = $productoModel->getProductosSimilares($producto['id_producto']);
+                }
             }
         }
-    
+
         // Cargar la vista del carrito
         require_once 'views/carrito/index.php';
     }
@@ -28,6 +29,17 @@ class CarritoController {
     public function add() {
         if (isset($_GET['id_producto'])) {
             $id_producto = $_GET['id_producto'];
+
+            // Verificar si el producto existe en la base de datos
+            $productoModel = new Producto();
+            $productoModel->setId_producto($id_producto);
+            $producto = $productoModel->getSelectProducto();
+
+            if (!$producto) {
+                $_SESSION['error_carrito'] = "El producto no existe.";
+                header("Location:" . base_url);
+                exit();
+            }
 
             // Verificar si el producto ya está en el carrito
             if (isset($_SESSION['carrito'])) {
@@ -50,9 +62,13 @@ class CarritoController {
                 $this->agregarProductoAlCarrito($id_producto);
             }
 
+            $_SESSION['carrito_agregado'] = "Producto agregado al carrito.";
             header("Location:" . base_url . "carrito/index");
+            exit();
         } else {
-            header("Location:" . base_url); // Redirigir si no se proporciona un ID de producto
+            $_SESSION['error_carrito'] = "No se proporcionó un ID de producto.";
+            header("Location:" . base_url);
+            exit();
         }
     }
 
@@ -60,45 +76,87 @@ class CarritoController {
     public function remove() {
         if (isset($_GET['indice'])) {
             $indice = $_GET['indice'];
-            unset($_SESSION['carrito'][$indice]); // Eliminar el producto del carrito
+
+            // Verificar si el índice existe en el carrito
+            if (isset($_SESSION['carrito'][$indice])) {
+                unset($_SESSION['carrito'][$indice]); // Eliminar el producto del carrito
+                $_SESSION['carrito_eliminado'] = "Producto eliminado del carrito.";
+            } else {
+                $_SESSION['error_carrito'] = "El producto no existe en el carrito.";
+            }
+        } else {
+            $_SESSION['error_carrito'] = "No se proporcionó un índice válido.";
         }
-        header("Location:" . base_url . "carrito.php");
+
+        header("Location:" . base_url . "carrito/index");
+        exit();
     }
 
     // Método para aumentar la cantidad de un producto en el carrito
     public function up() {
         if (isset($_GET['indice'])) {
             $indice = $_GET['indice'];
-            $_SESSION['carrito'][$indice]['unidad_producto']++; // Incrementar la cantidad
+
+            // Verificar si el índice existe en el carrito
+            if (isset($_SESSION['carrito'][$indice])) {
+                $_SESSION['carrito'][$indice]['unidad_producto']++; // Incrementar la cantidad
+                $_SESSION['carrito_actualizado'] = "Cantidad actualizada.";
+            } else {
+                $_SESSION['error_carrito'] = "El producto no existe en el carrito.";
+            }
+        } else {
+            $_SESSION['error_carrito'] = "No se proporcionó un índice válido.";
         }
-        header("Location:" . base_url . "carrito.php");
+
+        header("Location:" . base_url . "carrito/index");
+        exit();
     }
 
     // Método para disminuir la cantidad de un producto en el carrito
     public function down() {
         if (isset($_GET['indice'])) {
             $indice = $_GET['indice'];
-            $_SESSION['carrito'][$indice]['unidad_producto']--; // Disminuir la cantidad
 
-            // Si la cantidad llega a 0, eliminar el producto del carrito
-            if ($_SESSION['carrito'][$indice]['unidad_producto'] == 0) {
-                unset($_SESSION['carrito'][$indice]);
+            // Verificar si el índice existe en el carrito
+            if (isset($_SESSION['carrito'][$indice])) {
+                $_SESSION['carrito'][$indice]['unidad_producto']--; // Disminuir la cantidad
+
+                // Si la cantidad llega a 0, eliminar el producto del carrito
+                if ($_SESSION['carrito'][$indice]['unidad_producto'] == 0) {
+                    unset($_SESSION['carrito'][$indice]);
+                    $_SESSION['carrito_eliminado'] = "Producto eliminado del carrito.";
+                } else {
+                    $_SESSION['carrito_actualizado'] = "Cantidad actualizada.";
+                }
+            } else {
+                $_SESSION['error_carrito'] = "El producto no existe en el carrito.";
             }
+        } else {
+            $_SESSION['error_carrito'] = "No se proporcionó un índice válido.";
         }
-        header("Location:" . base_url . "carrito.php");
+
+        header("Location:" . base_url . "carrito/index");
+        exit();
     }
 
     // Método para vaciar el carrito
     public function delete_all() {
-        unset($_SESSION['carrito']); // Vaciar el carrito
-        header("Location:" . base_url . "carrito.php");
+        if (isset($_SESSION['carrito']) && !empty($_SESSION['carrito'])) {
+            unset($_SESSION['carrito']); // Vaciar el carrito
+            $_SESSION['carrito_vacio'] = "El carrito se ha vaciado.";
+        } else {
+            $_SESSION['error_carrito'] = "El carrito ya está vacío.";
+        }
+
+        header("Location:" . base_url . "carrito/index");
+        exit();
     }
 
     // Método privado para agregar un producto al carrito
     private function agregarProductoAlCarrito($id_producto) {
-        $producto = new Producto();
-        $producto->setId_producto($id_producto);
-        $producto = $producto->getSelectProducto();
+        $productoModel = new Producto();
+        $productoModel->setId_producto($id_producto);
+        $producto = $productoModel->getSelectProducto();
 
         if (is_object($producto)) {
             $_SESSION['carrito'][] = array(
@@ -112,16 +170,4 @@ class CarritoController {
             );
         }
     }
-	
-	
-	// En CarritoController.php
-private function calcularTotalCarrito() {
-    $total = 0;
-    if (isset($_SESSION['carrito'])) {
-        foreach ($_SESSION['carrito'] as $producto) {
-            $total += $producto['precio_producto'] * $producto['unidad_producto'];
-        }
-    }
-    return $total;
-}
 }

@@ -6,6 +6,15 @@ body {
     background-color: #f4f4f4;
     color: #333;
 }
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Alertas */
 .alert {
     padding: 10px;
     margin: 10px 0;
@@ -24,11 +33,26 @@ body {
     color: #721c24;
 }
 
+.alert-success {
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+}
+
+.alert-info {
+    background-color: #d1ecf1;
+    border: 1px solid #bee5eb;
+    color: #0c5460;
+}
+
+/* Botones */
 .btn {
     padding: 5px 10px;
     border-radius: 5px;
     text-decoration: none;
     color: white;
+    font-size: 14px;
+    cursor: pointer;
 }
 
 .btn-secondary {
@@ -42,6 +66,12 @@ body {
 .btn-success {
     background-color: #28a745;
 }
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+/* Header */
 header {
     background-color: #333;
     color: #fff;
@@ -175,4 +205,89 @@ footer {
     text-align: center;
     padding: 10px 0;
     margin-top: 20px;
+}
+
+/* Tabla del carrito */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background-color: #f4f4f4;
+}
+
+/* Diseño responsive */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    header .logo img {
+        margin-bottom: 10px;
+    }
+
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    nav ul li {
+        margin: 5px 0;
+    }
+
+    .banner h1 {
+        font-size: 2em;
+    }
+
+    .banner p {
+        font-size: 1em;
+    }
+
+    .producto {
+        width: 100%;
+    }
+
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+
+    th {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    tr {
+        border: 1px solid #ccc;
+        margin-bottom: 10px;
+    }
+
+    td {
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding-left: 50%;
+    }
+
+    td:before {
+        position: absolute;
+        top: 6px;
+        left: 6px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        content: attr(data-label);
+    }
 }

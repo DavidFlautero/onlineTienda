@@ -1,47 +1,58 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mayorisander - Tienda Online</title>
-    <link rel="stylesheet" href="../assets/css/styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <!-- FontAwesome para los íconos -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!-- Dependencias de Slick Slider -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
-</head>
-<body>
-    <!-- Encabezado -->
-    <header>
-        <div class="logo">
-            <img src="../assets/images/logo.png" alt="Logo de Mayorisander">
+<?php
+// Incluye el header
+require_once '../views/partials/header.php';
+?>
+
+<div class="container">
+    <h1>Carrito de Compras</h1>
+
+    <!-- Mostrar mensajes de confrmación o error -->
+    <?php if (isset($_SESSION['carrito_agregado'])): ?>
+        <div class="alert alert-success">
+            <?= $_SESSION['carrito_agregado'] ?>
         </div>
-        <!-- Barra de búsqueda -->
-        <div class="search-bar">
-            <input type="text" id="search-input" placeholder="Buscar producto...">
-            <div id="search-results"></div> <!-- Aquí se mostrarán las sugerencias -->
+        <?php unset($_SESSION['carrito_agregado']); ?>
+    <?php endif; ?>
+
+    <?php if (isset($_SESSION['carrito_eliminado'])): ?>
+        <div class="alert alert-success">
+            <?= $_SESSION['carrito_eliminado'] ?>
         </div>
-        <nav>
-            <ul>
-                <li><a href="../index.php">Inicio</a></li>
-                <li><a href="../pages/productos.php">Productos</a></li>
-                <li><a href="../pages/login.php">Iniciar Sesión</a></li>
-                <li><a href="../pages/carrito.php"><i class="fas fa-shopping-cart"></i> Carrito</a></li>
-            </ul>
-        </nav>
-    </header>
+        <?php unset($_SESSION['carrito_eliminado']); ?>
+    <?php endif; ?>
 
-   
+    <?php if (isset($_SESSION['carrito_actualizado'])): ?>
+        <div class="alert alert-success">
+            <?= $_SESSION['carrito_actualizado'] ?>
+        </div>
+        <?php unset($_SESSION['carrito_actualizado']); ?>
+    <?php endif; ?>
 
-    <!-- Incluye el Footer -->
-    <?php include '../views/partials/footer.php'; ?>
+    <?php if (isset($_SESSION['error_carrito'])): ?>
+        <div class="alert alert-error">
+            <?= $_SESSION['error_carrito'] ?>
+        </div>
+        <?php unset($_SESSION['error_carrito']); ?>
+    <?php endif; ?>
 
-    <!-- Dependencias de jQuery y Slick Slider -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-    <!-- Enlace al archivo JavaScript -->
-    <script src="../assets/js/scripts.js"></script>
-</body>
-</html>
+    <?php if (isset($_SESSION['carrito_vacio'])): ?>
+        <div class="alert alert-info">
+            <?= $_SESSION['carrito_vacio'] ?>
+        </div>
+        <?php unset($_SESSION['carrito_vacio']); ?>
+    <?php endif; ?>
+
+    <?php if (!empty($carrito)): ?>
+        <!-- Incluye la tabla del carrito desde un partial -->
+        <?php require_once 'partials/carrito_tabla.php'; ?>
+    <?php else: ?>
+        <div class="alert alert-info">
+            Tu carrito está vacío.
+        </div>
+    <?php endif; ?>
+</div>
+
+<?php
+// Incluye el footer
+require_once '../views/partials/footer.php';
+?>
