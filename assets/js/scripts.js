@@ -33,32 +33,77 @@ $(document).ready(function() {
         $('#search-results').html(''); // Limpia las sugerencias
     });
 
+    // Función para abrir el modal del carrito
+    function abrirModalCarrito() {
+        $('#modal-carrito').css('display', 'block');
+        mostrarResumenCarrito();
+    }
+
+    // Función para cerrar el modal del carrito
+    $('.cerrar-modal').on('click', function() {
+        $('#modal-carrito').css('display', 'none');
+    });
+
+    // Función para mostrar el resumen del carrito en el modal
+    function mostrarResumenCarrito() {
+        const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+        const resumen = $('#resumen-carrito');
+        const totalPrecioModal = $('#total-precio-modal');
+
+        if (carrito.length === 0) {
+            resumen.html('<div class="alert alert-info">Tu carrito está vacío.</div>');
+            totalPrecioModal.text('$0.00');
+            return;
+        }
+
+        let html = '';
+        let total = 0;
+
+        carrito.forEach((producto, indice) => {
+            const subtotal = producto.precio * producto.cantidad;
+            total += subtotal;
+
+            html += `
+                <div class="item-carrito">
+                    <img src="${producto.imagen}" alt="${producto.nombre}">
+                    <div>
+                        <p>${producto.nombre} - $${producto.precio.toFixed(2)} x ${producto.cantidad}</p>
+                        <button onclick="eliminarProductoModal(${indice})" class="btn btn-danger">Eliminar</button>
+                    </div>
+                </div>
+            `;
+        });
+
+        resumen.html(html);
+        totalPrecioModal.text(`$${total.toFixed(2)}`);
+    }
+
+    // Función para eliminar un producto desde el modal
+    window.eliminarProductoModal = function(indice) {
+        const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+        carrito.splice(indice, 1);
+        localStorage.setItem('carrito', JSON.stringify(carrito));
+        mostrarResumenCarrito();
+        actualizarContadorCarrito();
+    };
+
     // Función para añadir productos al carrito
-    window.añadirAlCarrito = function(id, nombre, precio) {
-        const producto = { id, nombre, precio, cantidad: 1 }; // Incluye id y cantidad
+    window.añadirAlCarrito = function(id, nombre, precio, imagen) {
+        const producto = { id, nombre, precio, imagen, cantidad: 1 };
         let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
-        // Verifica si el producto ya está en el carrito
         const productoExistente = carrito.find(p => p.id === id);
         if (productoExistente) {
-            productoExistente.cantidad += 1; // Incrementa la cantidad si ya existe
+            productoExistente.cantidad += 1;
         } else {
-            carrito.push(producto); // Agrega el producto si no existe
+            carrito.push(producto);
         }
 
         localStorage.setItem('carrito', JSON.stringify(carrito));
         alert(`¡${nombre} añadido al carrito!`);
-        actualizarContadorCarrito(); // Actualiza el contador del carrito
+        actualizarContadorCarrito();
+        abrirModalCarrito(); // Abre el modal después de agregar un producto
     };
-
-    // Maneja el clic en los botones de "Añadir al carrito"
-    $('.producto button').on('click', function() {
-        const producto = $(this).closest('.producto');
-        const id = producto.data('id'); // Obtén el ID del producto
-        const nombre = producto.find('h3').text();
-        const precio = parseFloat(producto.find('.precio').text().replace('$', ''));
-        añadirAlCarrito(id, nombre, precio); // Pasa el ID, nombre y precio
-    });
 
     // Función para actualizar el contador del carrito
     function actualizarContadorCarrito() {
@@ -70,5 +115,6 @@ $(document).ready(function() {
     }
 
     // Actualiza el contador del carrito al cargar la página
-    actualizarContadorCarrito();
+    document.addEventListener('DOMContentLoaded', mostrarResumenCarrito);
+    document.addEventListener('DOMContentLoaded', actualizarContadorCarrito);
 });
