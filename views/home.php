@@ -1,4 +1,4 @@
-<?php include 'partials/header.php'; ?>
+<?php include './partials/header.php'; ?>
 
 <section class="banner">
     <img src="assets/images/banner.jpg" alt="Banner Promocional" class="img-fluid">

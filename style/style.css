@@ -56,155 +56,19 @@ body {
 }
 
 .btn-secondary {
-    background-color: #6c757d;
+    background-color: #6c757d; /* Gris oscuro */
 }
 
 .btn-danger {
-    background-color: #dc3545;
+    background-color: #dc3545; /* Rojo */
 }
 
 .btn-success {
-    background-color: #28a745;
+    background-color: #28a745; /* Verde */
 }
 
 .btn:hover {
     opacity: 0.9;
-}
-
-/* Header */
-header {
-    background-color: #333;
-    color: #fff;
-    padding: 10px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-header .logo img {
-    height: 50px;
-}
-
-nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-}
-
-nav ul li {
-    margin-left: 20px;
-}
-
-nav ul li a {
-    color: #fff;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-nav ul li a:hover {
-    text-decoration: underline;
-}
-
-/* Banner */
-.banner {
-    background-color: #007bff;
-    color: #fff;
-    text-align: center;
-    padding: 50px 20px;
-}
-
-.banner h1 {
-    font-size: 2.5em;
-    margin-bottom: 10px;
-}
-
-.banner p {
-    font-size: 1.2em;
-    margin-bottom: 20px;
-}
-
-.banner .btn {
-    background-color: #fff;
-    color: #007bff;
-    padding: 10px 20px;
-    text-decoration: none;
-    border-radius: 5px;
-    font-weight: bold;
-}
-
-.banner .btn:hover {
-    background-color: #f4f4f4;
-}
-
-/* Productos destacados */
-.destacados {
-    padding: 20px;
-    text-align: center;
-}
-
-.destacados h2 {
-    font-size: 2em;
-    margin-bottom: 20px;
-}
-
-.productos {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-}
-
-.producto {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 20px;
-    width: 30%;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.producto img {
-    max-width: 100%;
-    border-radius: 5px;
-}
-
-.producto h3 {
-    font-size: 1.5em;
-    margin: 10px 0;
-}
-
-.producto p {
-    font-size: 1em;
-    color: #666;
-}
-
-.producto .precio {
-    font-size: 1.2em;
-    color: #007bff;
-    font-weight: bold;
-}
-
-.producto button {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.producto button:hover {
-    background-color: #0056b3;
-}
-
-/* Pie de página */
-footer {
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    padding: 10px 0;
-    margin-top: 20px;
 }
 
 /* Tabla del carrito */
@@ -225,69 +89,4 @@ th, td {
 
 th {
     background-color: #f4f4f4;
-}
-
-/* Diseño responsive */
-@media (max-width: 768px) {
-    header {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    header .logo img {
-        margin-bottom: 10px;
-    }
-
-    nav ul {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    nav ul li {
-        margin: 5px 0;
-    }
-
-    .banner h1 {
-        font-size: 2em;
-    }
-
-    .banner p {
-        font-size: 1em;
-    }
-
-    .producto {
-        width: 100%;
-    }
-
-    table, thead, tbody, th, td, tr {
-        display: block;
-    }
-
-    th {
-        position: absolute;
-        top: -9999px;
-        left: -9999px;
-    }
-
-    tr {
-        border: 1px solid #ccc;
-        margin-bottom: 10px;
-    }
-
-    td {
-        border: none;
-        border-bottom: 1px solid #eee;
-        position: relative;
-        padding-left: 50%;
-    }
-
-    td:before {
-        position: absolute;
-        top: 6px;
-        left: 6px;
-        width: 45%;
-        padding-right: 10px;
-        white-space: nowrap;
-        content: attr(data-label);
-    }
 }

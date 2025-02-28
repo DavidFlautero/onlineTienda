@@ -1,54 +1,36 @@
-<?php
-// header.php
-?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tienda Online</title>
-    <!-- Incluye Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Estilos personalizados -->
-    <style>
-        .carrito-icon {
-            position: relative;
-            display: inline-block;
-        }
-        .carrito-count {
-            position: absolute;
-            top: -10px;
-            right: -10px;
-            background-color: red;
-            color: white;
-            border-radius: 50%;
-            padding: 2px 6px;
-            font-size: 12px;
-        }
-    </style>
+    <title>Mayorisander - Tienda Online</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome para los íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Dependencias de Slick Slider -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
 </head>
 <body>
-    <!-- Header -->
-    <header class="bg-primary text-white p-3">
-        <div class="container">
-            <div class="d-flex justify-content-between align-items-center">
-                <h1>Tienda Online</h1>
-                <nav>
-                    <ul class="list-inline mb-0">
-                        <li class="list-inline-item"><a href="index.php" class="text-white">Inicio</a></li>
-                        <li class="list-inline-item"><a href="carrito.php" class="text-white">Carrito</a></li>
-                    </ul>
-                </nav>
-                <div class="carrito-icon">
-                    <a href="carrito.php" class="text-white">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
-                            <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
-                        </svg>
-                        <span id="carrito-count" class="carrito-count">0</span>
-                    </a>
-                </div>
-            </div>
+    <!-- Encabezado -->
+    <header>
+        <div class="logo">
+            <img src="../assets/images/logo.png" alt="Logo de Mayorisander">
         </div>
+        <!-- Barra de búsqueda -->
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Buscar producto...">
+            <div id="search-results"></div> <!-- Aquí se mostrarán las sugerencias -->
+        </div>
+        <nav>
+            <ul>
+                <li><a href="../index.php">Inicio</a></li>
+                <li><a href="../pages/productos.php">Productos</a></li>
+                <li><a href="../pages/login.php">Iniciar Sesión</a></li>
+                <li><a href="../pages/carrito.php"><i class="fas fa-shopping-cart"></i> Carrito</a></li>
+            </ul>
+        </nav>
     </header>
 
     <!-- Script para manejar el carrito -->
