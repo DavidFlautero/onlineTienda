@@ -34,19 +34,41 @@ $(document).ready(function() {
     });
 
     // Función para añadir productos al carrito
-    window.añadirAlCarrito = function(nombre, precio) {
-        const producto = { nombre, precio };
+    window.añadirAlCarrito = function(id, nombre, precio) {
+        const producto = { id, nombre, precio, cantidad: 1 }; // Incluye id y cantidad
         let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-        carrito.push(producto);
+
+        // Verifica si el producto ya está en el carrito
+        const productoExistente = carrito.find(p => p.id === id);
+        if (productoExistente) {
+            productoExistente.cantidad += 1; // Incrementa la cantidad si ya existe
+        } else {
+            carrito.push(producto); // Agrega el producto si no existe
+        }
+
         localStorage.setItem('carrito', JSON.stringify(carrito));
         alert(`¡${nombre} añadido al carrito!`);
+        actualizarContadorCarrito(); // Actualiza el contador del carrito
     };
 
     // Maneja el clic en los botones de "Añadir al carrito"
     $('.producto button').on('click', function() {
         const producto = $(this).closest('.producto');
+        const id = producto.data('id'); // Obtén el ID del producto
         const nombre = producto.find('h3').text();
-        const precio = producto.find('.precio').text().replace('$', '');
-        añadirAlCarrito(nombre, precio);
+        const precio = parseFloat(producto.find('.precio').text().replace('$', ''));
+        añadirAlCarrito(id, nombre, precio); // Pasa el ID, nombre y precio
     });
+
+    // Función para actualizar el contador del carrito
+    function actualizarContadorCarrito() {
+        const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+        const carritoCount = $('#carrito-count');
+        if (carritoCount.length) {
+            carritoCount.text(carrito.length);
+        }
+    }
+
+    // Actualiza el contador del carrito al cargar la página
+    actualizarContadorCarrito();
 });

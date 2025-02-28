@@ -73,30 +73,30 @@
 
     <!-- Productos destacados -->
     <section class="destacados">
-        <h2>Productos Destacados</h2>
-        <div class="productos">
-            <div class="producto">
-                <img src="assets/img/producto1.jpg" alt="Producto 1">
-                <h3>Producto 1</h3>
-                <p>Descripción breve del producto.</p>
-                <span class="precio">$20.00</span>
-                <button onclick="añadirAlCarrito('Producto 1', 20)">Añadir al carrito</button>
-            </div>
-            <div class="producto">
-                <img src="assets/img/producto2.jpg" alt="Producto 2">
-                <h3>Producto 2</h3>
-                <p>Descripción breve del producto.</p>
-                <span class="precio">$25.00</span>
-                <button onclick="añadirAlCarrito('Producto 2', 25)">Añadir al carrito</button>
-            </div>
-            <div class="producto">
-                <img src="assets/img/producto3.jpg" alt="Producto 3">
-                <h3>Producto 3</h3>
-                <p>Descripción breve del producto.</p>
-                <span class="precio">$30.00</span>
-                <button onclick="añadirAlCarrito('Producto 3', 30)">Añadir al carrito</button>
-            </div>
+    <h2>Productos Destacados</h2>
+    <div class="productos">
+        <div class="producto" data-id="1">
+            <img src="assets/img/producto1.jpg" alt="Producto 1">
+            <h3>Producto 1</h3>
+            <p>Descripción breve del producto.</p>
+            <span class="precio">$20.00</span>
+            <button onclick="añadirAlCarrito(1, 'Producto 1', 20)">Añadir al carrito</button>
         </div>
+        <div class="producto" data-id="2">
+            <img src="assets/img/producto2.jpg" alt="Producto 2">
+            <h3>Producto 2</h3>
+            <p>Descripción breve del producto.</p>
+            <span class="precio">$25.00</span>
+            <button onclick="añadirAlCarrito(2, 'Producto 2', 25)">Añadir al carrito</button>
+        </div>
+        <div class="producto" data-id="3">
+            <img src="assets/img/producto3.jpg" alt="Producto 3">
+            <h3>Producto 3</h3>
+            <p>Descripción breve del producto.</p>
+            <span class="precio">$30.00</span>
+            <button onclick="añadirAlCarrito(3, 'Producto 3', 30)">Añadir al carrito</button>
+        </div>
+    </div>
     </section>
 
     <!-- Incluye el Footer -->
