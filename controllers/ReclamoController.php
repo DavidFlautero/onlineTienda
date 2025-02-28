@@ -1,6 +1,6 @@
 <?php
-require_once 'models/reclamo.php';
-require_once 'models/pedido.php';
+require_once '../models/reclamo.php';
+require_once '../models/pedido.php';
 
 class ReclamoController {
 

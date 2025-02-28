@@ -1,5 +1,5 @@
 <?php
-require_once 'models/pedido.php';
+require_once '../models/pedido.php';
 
 class PedidoController {
 
@@ -19,16 +19,17 @@ class PedidoController {
         require_once 'views/pedido/index.php';
     }
 	
-	public function estado() {
-    if (isset($_SESSION['user'])) {
-        $pedido = new Pedido();
-        $pedido->setId_usuario($_SESSION['user']->id_usuario);
-        $pedidos = $pedido->getPedidosByUser();
-        require_once 'views/pedido/estado.php';
-    } else {
-        header("Location:" . base_url);
+    // Método para ver el estado de los pedidos del usuario
+    public function estado() {
+        if (isset($_SESSION['user'])) {
+            $pedido = new Pedido();
+            $pedido->setId_usuario($_SESSION['user']->id_usuario);
+            $pedidos = $pedido->getPedidosByUser();
+            require_once 'views/pedido/estado.php';
+        } else {
+            header("Location:" . base_url);
+        }
     }
-	}
 
     // Método para agregar un nuevo pedido
     public function add() {
@@ -72,7 +73,7 @@ class PedidoController {
 
     // Método para mostrar la página de pedido confirmado
     public function confirmado() {
-        if (isset($_SESSION['pedido_confirmado']) {
+        if (isset($_SESSION['pedido_confirmado'])) {
             unset($_SESSION['pedido_confirmado']); // Limpiar la sesión
             require_once 'views/pedido/confirmado.php';
         } else {
