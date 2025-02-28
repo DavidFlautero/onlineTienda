@@ -164,5 +164,91 @@ session_start(); // Inicia la sesión si no está iniciada
         // Actualizar el contador del carrito al cargar la página
         document.addEventListener('DOMContentLoaded', actualizarContadorCarrito);
     </script>
+    <!-- Modal del carrito -->
+<div id="modal-carrito" class="modal">
+    <div class="modal-contenido">
+        <span class="cerrar-modal">&times;</span>
+        <h2>Carrito de Compras</h2>
+        <div id="resumen-carrito">
+            <!-- Los productos se cargarán aquí mediante JavaScript -->
+        </div>
+        <div id="total-carrito-modal" class="text-right">
+            <h3>Total: <span id="total-precio-modal">$0.00</span></h3>
+        </div>
+        <a href="carrito.php" class="btn btn-ver-carrito">Ver Carrito</a>
+    </div>
+</div>
+
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    // Función para abrir el modal del carrito
+    function abrirModalCarrito() {
+        $('#modal-carrito').css('display', 'block');
+        mostrarResumenCarrito();
+    }
+
+    // Función para cerrar el modal del carrito
+    $('.cerrar-modal').on('click', function() {
+        $('#modal-carrito').css('display', 'none');
+    });
+
+    // Función para mostrar el resumen del carrito en el modal
+    function mostrarResumenCarrito() {
+        const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+        const resumen = $('#resumen-carrito');
+        const totalPrecioModal = $('#total-precio-modal');
+
+        if (carrito.length === 0) {
+            resumen.html('<div class="alert alert-info">Tu carrito está vacío.</div>');
+            totalPrecioModal.text('$0.00');
+            return;
+        }
+
+        let html = '';
+        let total = 0;
+
+        carrito.forEach((producto, indice) => {
+            const subtotal = producto.precio * producto.cantidad;
+            total += subtotal;
+
+            html += `
+                <div class="item-carrito">
+                    <img src="${producto.imagen}" alt="${producto.nombre}">
+                    <div>
+                        <p>${producto.nombre} - $${producto.precio.toFixed(2)} x ${producto.cantidad}</p>
+                        <button onclick="eliminarProductoModal(${indice})" class="btn btn-danger">Eliminar</button>
+                    </div>
+                </div>
+            `;
+        });
+
+        resumen.html(html);
+        totalPrecioModal.text(`$${total.toFixed(2)}`);
+    }
+
+    // Función para eliminar un producto desde el modal
+    window.eliminarProductoModal = function(indice) {
+        const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+        carrito.splice(indice, 1);
+        localStorage.setItem('carrito', JSON.stringify(carrito));
+        mostrarResumenCarrito();
+        actualizarContadorCarrito();
+    };
+
+    // Función para actualizar el contador del carrito
+    function actualizarContadorCarrito() {
+        const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+        const carritoCount = $('#carrito-count');
+        if (carritoCount.length) {
+            carritoCount.text(carrito.length);
+        }
+    }
+
+    // Mostrar el carrito al cargar la página
+    document.addEventListener('DOMContentLoaded', mostrarResumenCarrito);
+    // Actualizar el contador del carrito al cargar la página
+    document.addEventListener('DOMContentLoaded', actualizarContadorCarrito);
+</script>
 </body>
 </html>

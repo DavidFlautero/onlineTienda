@@ -95,3 +95,82 @@ th {
 .pagina-carrito .search-bar {
     display: none;
 }
+
+/* Estilos para el modal */
+.modal {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 100%;
+    background-color: #fff;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    overflow-y: auto;
+}
+
+.modal-contenido {
+    padding: 20px;
+}
+
+.cerrar-modal {
+    cursor: pointer;
+    font-size: 24px;
+    float: right;
+}
+
+.cerrar-modal:hover {
+    color: #f00;
+}
+
+.btn-ver-carrito {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #28a745;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+.btn-ver-carrito:hover {
+    background-color: #218838;
+}
+
+/* Estilos para los productos en el modal */
+.item-carrito {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.item-carrito img {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+    border-radius: 5px;
+}
+
+.item-carrito p {
+    margin: 0;
+    font-size: 14px;
+}
+
+.item-carrito button {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.item-carrito button:hover {
+    background-color: #c82333;
+}
