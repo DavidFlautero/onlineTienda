@@ -1,10 +1,26 @@
 <?php
-require_once 'models/producto.php';
+require_once '../models/producto.php';
 
 class CarritoController {
 
     // Método para mostrar el carrito de compras
     public function index() {
+        // Verifica si hay productos en el carrito
+        var_dump($_SESSION['carrito']); // Depuración
+        die(); // Detiene la ejecución para ver el resultado
+    
+        // Obtener los productos del carrito desde la sesión
+        $carrito = isset($_SESSION['carrito']) ? $_SESSION['carrito'] : array();
+    
+        // Obtener productos de reemplazo para cada producto en el carrito
+        foreach ($carrito as &$producto) {
+            if ($producto['stock_producto'] == 0) {
+                $productoModel = new Producto();
+                $producto['reemplazos'] = $productoModel->getProductosSimilares($producto['id_producto']);
+            }
+        }
+    
+        // Cargar la vista del carrito
         require_once 'views/carrito/index.php';
     }
 
@@ -46,7 +62,7 @@ class CarritoController {
             $indice = $_GET['indice'];
             unset($_SESSION['carrito'][$indice]); // Eliminar el producto del carrito
         }
-        header("Location:" . base_url . "carrito/index");
+        header("Location:" . base_url . "carrito.php");
     }
 
     // Método para aumentar la cantidad de un producto en el carrito
@@ -55,7 +71,7 @@ class CarritoController {
             $indice = $_GET['indice'];
             $_SESSION['carrito'][$indice]['unidad_producto']++; // Incrementar la cantidad
         }
-        header("Location:" . base_url . "carrito/index");
+        header("Location:" . base_url . "carrito.php");
     }
 
     // Método para disminuir la cantidad de un producto en el carrito
@@ -69,13 +85,13 @@ class CarritoController {
                 unset($_SESSION['carrito'][$indice]);
             }
         }
-        header("Location:" . base_url . "carrito/index");
+        header("Location:" . base_url . "carrito.php");
     }
 
     // Método para vaciar el carrito
     public function delete_all() {
         unset($_SESSION['carrito']); // Vaciar el carrito
-        header("Location:" . base_url . "carrito/index");
+        header("Location:" . base_url . "carrito.php");
     }
 
     // Método privado para agregar un producto al carrito
@@ -91,8 +107,21 @@ class CarritoController {
                 "nombre_producto" => $producto->nombre_producto,
                 "unidad_producto" => 1,
                 "oferta_producto" => $producto->oferta_producto,
-                "imagen_producto" => $producto->imagen_producto
+                "imagen_producto" => $producto->imagen_producto,
+                "stock_producto" => $producto->stock_producto // Añadir el stock del producto
             );
         }
     }
+	
+	
+	// En CarritoController.php
+private function calcularTotalCarrito() {
+    $total = 0;
+    if (isset($_SESSION['carrito'])) {
+        foreach ($_SESSION['carrito'] as $producto) {
+            $total += $producto['precio_producto'] * $producto['unidad_producto'];
+        }
+    }
+    return $total;
+}
 }
