@@ -90,3 +90,8 @@ th, td {
 th {
     background-color: #f4f4f4;
 }
+
+/* Estilos específicos para la página del carrito */
+.pagina-carrito .search-bar {
+    display: none;
+}
