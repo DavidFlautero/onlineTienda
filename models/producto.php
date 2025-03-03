@@ -1,4 +1,8 @@
 <?php
+// models/Producto.php
+
+require_once __DIR__ . '/../config/db.php'; // Incluir la conexión a la base de datos
+
 class Producto {
     private $id_producto;
     private $id_categoria;

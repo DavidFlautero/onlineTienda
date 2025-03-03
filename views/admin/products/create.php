@@ -18,7 +18,7 @@ $categorias = $categoria->getAll();
 </head>
 <body>
     <h1>Crear Nuevo Producto</h1>
-    <form action="../../../controllers/productoController.php?action=guardarProducto" method="POST" enctype="multipart/form-data">
+    <form action="../../../controllers/ProductoController.php?action=guardarProducto" method="POST" enctype="multipart/form-data">
         <label for="nombre">Nombre:</label>
         <input type="text" name="nombre" id="nombre" required>
 
