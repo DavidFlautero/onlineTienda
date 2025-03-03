@@ -1,58 +1,35 @@
-$(document).ready(function() {
+$(document).ready(function () {
     // Inicializa el slider con Slick
     $('.slider').slick({
-        autoplay: true,          // Reproducción automática
-        dots: true,              // Muestra los puntos de navegación
-        arrows: true,            // Muestra flechas de navegación
-        infinite: true,          // Desplazamiento infinito
-        speed: 900,              // Velocidad de transición
-        slidesToShow: 1,         // Número de slides visibles
-        slidesToScroll: 1        // Número de slides a desplazar
+        autoplay: true,
+        dots: true,
+        arrows: true,
+        infinite: true,
+        speed: 900,
+        slidesToShow: 1,
+        slidesToScroll: 1
     });
 
-    // Maneja el autocompletado del buscador
-    $('#search-input').on('input', function() {
-        const query = $(this).val(); // Obtiene el texto ingresado
-        if (query.length >= 2) {    // Solo busca si hay 2 o más caracteres
-            $.ajax({
-                url: 'controllers/SearchController.php', // Endpoint para buscar
-                method: 'POST',
-                data: { query: query },
-                success: function(response) {
-                    $('#search-results').html(response); // Muestra las sugerencias
-                }
-            });
-        } else {
-            $('#search-results').html(''); // Limpia las sugerencias
-        }
-    });
-
-    // Maneja el clic en una sugerencia del buscador
-    $(document).on('click', '#search-results div', function() {
-        $('#search-input').val($(this).text()); // Llena el input con la sugerencia
-        $('#search-results').html(''); // Limpia las sugerencias
-    });
-
-    // Función para abrir el modal del carrito
-    function abrirModalCarrito() {
-        $('#modal-carrito').css('display', 'block');
+    // Función para abrir el slider del carrito
+    function abrirSliderCarrito() {
+        $('#slider-carrito').addClass('abierto'); // Agrega la clase 'abierto'
         mostrarResumenCarrito();
     }
 
-    // Función para cerrar el modal del carrito
-    $('.cerrar-modal').on('click', function() {
-        $('#modal-carrito').css('display', 'none');
+    // Función para cerrar el slider del carrito
+    $('.cerrar-slider').on('click', function () {
+        $('#slider-carrito').removeClass('abierto'); // Remueve la clase 'abierto'
     });
 
-    // Función para mostrar el resumen del carrito en el modal
+    // Función para mostrar el resumen del carrito en el slider
     function mostrarResumenCarrito() {
         const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
         const resumen = $('#resumen-carrito');
-        const totalPrecioModal = $('#total-precio-modal');
+        const totalPrecioSlider = $('#total-precio-slider');
 
         if (carrito.length === 0) {
             resumen.html('<div class="alert alert-info">Tu carrito está vacío.</div>');
-            totalPrecioModal.text('$0.00');
+            totalPrecioSlider.text('$0.00');
             return;
         }
 
@@ -65,21 +42,48 @@ $(document).ready(function() {
 
             html += `
                 <div class="item-carrito">
-                    <img src="${producto.imagen}" alt="${producto.nombre}">
+                    <img src="${producto.imagen}" alt="${producto.nombre}" style="width: 50px; height: 50px;">
                     <div>
-                        <p>${producto.nombre} - $${producto.precio.toFixed(2)} x ${producto.cantidad}</p>
-                        <button onclick="eliminarProductoModal(${indice})" class="btn btn-danger">Eliminar</button>
+                        <p>${producto.nombre} - $${producto.precio.toFixed(2)}</p>
+                        <div class="cantidad-control">
+                            <button onclick="disminuirCantidad(${indice})">-</button>
+                            <span>${producto.cantidad}</span>
+                            <button onclick="aumentarCantidad(${indice})">+</button>
+                        </div>
+                        <button onclick="eliminarProductoSlider(${indice})" class="btn btn-danger">Eliminar</button>
                     </div>
                 </div>
             `;
         });
 
         resumen.html(html);
-        totalPrecioModal.text(`$${total.toFixed(2)}`);
+        totalPrecioSlider.text(`$${total.toFixed(2)}`);
     }
 
-    // Función para eliminar un producto desde el modal
-    window.eliminarProductoModal = function(indice) {
+    // Función para aumentar la cantidad de un producto
+    window.aumentarCantidad = function (indice) {
+        const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+        if (carrito[indice]) {
+            carrito[indice].cantidad += 1;
+            localStorage.setItem('carrito', JSON.stringify(carrito));
+            mostrarResumenCarrito();
+            actualizarContadorCarrito();
+        }
+    };
+
+    // Función para disminuir la cantidad de un producto
+    window.disminuirCantidad = function (indice) {
+        const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+        if (carrito[indice] && carrito[indice].cantidad > 1) {
+            carrito[indice].cantidad -= 1;
+            localStorage.setItem('carrito', JSON.stringify(carrito));
+            mostrarResumenCarrito();
+            actualizarContadorCarrito();
+        }
+    };
+
+    // Función para eliminar un producto desde el slider
+    window.eliminarProductoSlider = function (indice) {
         const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
         carrito.splice(indice, 1);
         localStorage.setItem('carrito', JSON.stringify(carrito));
@@ -88,7 +92,7 @@ $(document).ready(function() {
     };
 
     // Función para añadir productos al carrito
-    window.añadirAlCarrito = function(id, nombre, precio, imagen) {
+    window.añadirAlCarrito = function (id, nombre, precio, imagen) {
         const producto = { id, nombre, precio, imagen, cantidad: 1 };
         let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
@@ -102,7 +106,7 @@ $(document).ready(function() {
         localStorage.setItem('carrito', JSON.stringify(carrito));
         alert(`¡${nombre} añadido al carrito!`);
         actualizarContadorCarrito();
-        abrirModalCarrito(); // Abre el modal después de agregar un producto
+        abrirSliderCarrito(); // Abre el slider después de agregar un producto
     };
 
     // Función para actualizar el contador del carrito
@@ -115,6 +119,5 @@ $(document).ready(function() {
     }
 
     // Actualiza el contador del carrito al cargar la página
-    document.addEventListener('DOMContentLoaded', mostrarResumenCarrito);
-    document.addEventListener('DOMContentLoaded', actualizarContadorCarrito);
+    actualizarContadorCarrito();
 });
