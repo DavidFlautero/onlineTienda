@@ -89,108 +89,51 @@ class Producto {
         $this->imagen_producto = $this->db->real_escape_string($imagen_producto);
     }
 
+    // Guardar un nuevo producto
+    public function save() {
+        // Validar datos antes de guardar
+        if (empty($this->getId_categoria()) || empty($this->getNombre_producto()) || empty($this->getPrecio_producto())) {
+            die("Error: Faltan datos obligatorios.");
+        }
+
+        // Preparar la consulta SQL
+        $sql = "INSERT INTO tbl_productos (
+                    id_categoria, 
+                    nombre_producto, 
+                    descripcion_producto, 
+                    precio_producto, 
+                    stock_producto, 
+                    oferta_producto, 
+                    fecha_producto, 
+                    imagen_producto
+                ) VALUES (
+                    {$this->getId_categoria()}, 
+                    '{$this->getNombre_producto()}', 
+                    '{$this->getDescripcion_producto()}', 
+                    {$this->getPrecio_producto()}, 
+                    {$this->getStock_producto()}, 
+                    '{$this->getOferta_producto()}', 
+                    CURDATE(), 
+                    '{$this->getImagen_producto()}'
+                );";
+
+        // Ejecutar la consulta
+        $save = $this->db->query($sql);
+
+        // Verificar si la consulta fue exitosa
+        if ($save) {
+            return true;
+        } else {
+            // Mostrar el error de la consulta
+            die("Error al guardar el producto: " . $this->db->error);
+        }
+    }
+
     // Obtener todos los productos
     public function getAll() {
         $sql = "SELECT * FROM tbl_productos ORDER BY id_producto DESC;";
         $productos = $this->db->query($sql);
-        return $productos;
-    }
-
-    // Obtener un producto específico por su ID
-    public function getOne() {
-        $sql = "SELECT * FROM tbl_productos WHERE id_producto = {$this->getId_producto()};";
-        $producto = $this->db->query($sql);
-        return $producto->fetch_object();
-    }
-
-    // Obtener un producto específico por su ID (alternativa)
-    public function getSelectProducto() {
-        $sql = "SELECT * FROM tbl_productos WHERE id_producto = {$this->getId_producto()};";
-        $producto = $this->db->query($sql);
-        return $producto->fetch_object();
-    }
-
-    // Obtener productos de la misma categoría (para reemplazos)
-    public function getProductosSimilares($id_producto, $limit = 3) {
-        $sql = "SELECT * FROM tbl_productos WHERE id_categoria = (
-                    SELECT id_categoria FROM tbl_productos WHERE id_producto = $id_producto
-                ) AND id_producto != $id_producto LIMIT $limit;";
-        $productos = $this->db->query($sql);
-        return $productos;
-    }
-
-    // Obtener productos de una categoría específica
-    public function getProductosByCategoria() {
-        $sql = "SELECT p.* FROM tbl_productos p "
-             . "INNER JOIN tbl_categorias c ON p.id_categoria = c.id_categoria "
-             . "WHERE c.id_categoria = {$this->getId_categoria()} "
-             . "ORDER BY p.nombre_producto ASC;";
-        $productos = $this->db->query($sql);
-        return $productos;
-    }
-
-    // Obtener productos destacados
-    public function getDestacados() {
-        $sql = "SELECT * FROM tbl_productos WHERE oferta_producto = 'si' ORDER BY RAND() LIMIT 6;";
-        $productos = $this->db->query($sql);
-        return $productos;
-    }
-
-    // Guardar un nuevo producto
-    public function save() {
-        $sql = "INSERT INTO tbl_productos VALUES (NULL, {$this->getId_categoria()}, '{$this->getNombre_producto()}', '{$this->getDescripcion_producto()}', {$this->getPrecio_producto()}, {$this->getStock_producto()}, '{$this->getOferta_producto()}', CURDATE(), '{$this->getImagen_producto()}');";
-        $save = $this->db->query($sql);
-
-        if ($save) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    // Actualizar un producto existente
-    public function update() {
-        $sql = "UPDATE tbl_productos SET "
-             . "id_categoria = {$this->getId_categoria()}, "
-             . "nombre_producto = '{$this->getNombre_producto()}', "
-             . "descripcion_producto = '{$this->getDescripcion_producto()}', "
-             . "precio_producto = {$this->getPrecio_producto()}, "
-             . "stock_producto = {$this->getStock_producto()}, "
-             . "oferta_producto = '{$this->getOferta_producto()}', "
-             . "imagen_producto = '{$this->getImagen_producto()}' "
-             . "WHERE id_producto = {$this->getId_producto()};";
-        $update = $this->db->query($sql);
-
-        if ($update) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    // Eliminar un producto
-    public function delete() {
-        $sql = "DELETE FROM tbl_productos WHERE id_producto = {$this->getId_producto()};";
-        $delete = $this->db->query($sql);
-
-        if ($delete) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    // Obtener productos en oferta
-    public function getOfertas() {
-        $sql = "SELECT * FROM tbl_productos WHERE oferta_producto = 'si' ORDER BY RAND() LIMIT 6;";
-        $ofertas = $this->db->query($sql);
-        return $ofertas;
-    }
-
-    // Obtener productos aleatorios (para secciones como "Productos recomendados")
-    public function getRandom($limit = 6) {
-        $sql = "SELECT * FROM tbl_productos ORDER BY RAND() LIMIT $limit;";
-        $productos = $this->db->query($sql);
-        return $productos;
+        return $productos->fetch_all(MYSQLI_ASSOC);
     }
 }
+?>

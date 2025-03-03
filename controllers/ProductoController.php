@@ -1,60 +1,84 @@
 <?php
-// Incluye los modelos usando rutas relativas
+// productoController.php
+
 require_once __DIR__ . '/../models/Producto.php';
 require_once __DIR__ . '/../models/Categoria.php';
 
+// Habilitar visualización de errores
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 class ProductoController {
 
-    // Método para mostrar la página de inicio
-    public function index() {
-        // Obtener productos destacados
-        $producto = new Producto();
-        $productosDestacados = $producto->getDestacados();
-
-        // Obtener categorías
+    // Método para mostrar el formulario de creación de productos
+    public function crearProducto() {
+        // Obtener todas las categorías
         $categoria = new Categoria();
         $categorias = $categoria->getAll();
 
-        // Cargar la vista
-        require_once __DIR__ . '/../views/home.php';
+        // Cargar la vista del formulario
+        require_once __DIR__ . '/../views/admin/products/create.php';
     }
 
-    // Método para mostrar el detalle de un producto
-    public function detalleProducto() {
-        if (isset($_GET['id_producto'])) {
-            $producto = new Producto();
-            $producto->setId_producto($_GET['id_producto']);
-            $producto = $producto->getSelectProducto();
+    // Método para guardar un nuevo producto
+    public function guardarProducto() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Verificar si se subió un archivo
+            if (!isset($_FILES['imagen']) || $_FILES['imagen']['error'] !== UPLOAD_ERR_OK) {
+                die("Error: No se subió ninguna imagen o hubo un error en la subida.");
+            }
 
-            // Obtener productos relacionados (misma categoría)
-            $productosRelacionados = $producto->getProductosByCategoria();
+            // Recuperar datos del formulario
+            $nombre = $_POST['nombre'];
+            $descripcion = $_POST['descripcion'];
+            $precio = $_POST['precio'];
+            $categoria = $_POST['categoria'];
+            $imagen = $_FILES['imagen'];
 
-            require_once __DIR__ . '/../views/producto/detalle.php';
+            // Ruta de la carpeta de uploads
+            $uploadDir = __DIR__ . '/../../assets/uploads/';
+
+            // Crear la carpeta si no existe
+            if (!is_dir($uploadDir)) {
+                if (!mkdir($uploadDir, 0755, true)) {
+                    die("Error: No se pudo crear la carpeta de uploads.");
+                }
+            }
+
+            // Subir la imagen
+            $uploadFile = $uploadDir . basename($imagen['name']);
+            if (move_uploaded_file($imagen['tmp_name'], $uploadFile)) {
+                // Guardar el producto en la base de datos
+                $producto = new Producto();
+                $producto->setId_categoria($categoria);
+                $producto->setNombre_producto($nombre);
+                $producto->setDescripcion_producto($descripcion);
+                $producto->setPrecio_producto($precio);
+                $producto->setImagen_producto($imagen['name']);
+
+                if ($producto->save()) {
+                    header("Location: /views/admin/products/list.php"); // Redirigir a la lista de productos
+                    exit();
+                } else {
+                    die("Error: No se pudo guardar el producto en la base de datos.");
+                }
+            } else {
+                die("Error: No se pudo mover la imagen a la carpeta de uploads.");
+            }
         } else {
-            header("Location:" . base_url);
+            die("Error: Método no permitido.");
         }
     }
-	public function listCategories() {
-    // Conectar a la base de datos
-    $conexion = new mysqli("localhost", "usuario", "contraseña", "basedatos");
 
-    // Consulta para obtener todas las categorías
-    $query = "SELECT * FROM tbl_categorias";
-    $result = $conexion->query($query);
+    // Método para listar todos los productos
+    public function listarProductos() {
+        // Obtener todos los productos
+        $producto = new Producto();
+        $productos = $producto->getAll();
 
-    // Mostrar categorías
-    echo '<div class="categorias">';
-    while ($categoria = $result->fetch_assoc()) {
-        echo '<div class="categoria">';
-        echo '<h3>' . $categoria['nombre_categoria'] . '</h3>';
-        echo '</div>';
+        // Cargar la vista de listado de productos
+        require_once __DIR__ . '/../views/admin/products/list.php';
     }
-    echo '</div>';
-
-    // Cerrar conexión
-    $conexion->close();
-}
-
-    // Otros métodos (gestion, crear, save, editar, eliminar, etc.)
 }
 ?>

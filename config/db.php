@@ -1,7 +1,9 @@
 <?php
+// db.php
+
 // Verifica si la clase ya está definida
-if (!class_exists('DataBase')) {
-    class DataBase {
+if (!class_exists('Database')) {
+    class Database {
         public static function connect() {
             $db = new mysqli('localhost', 'root', '', 'tienda_freelancer');
             if ($db->connect_error) {
@@ -14,5 +16,5 @@ if (!class_exists('DataBase')) {
 }
 
 // Crear una instancia de la conexión
-$conexion = DataBase::connect();
+$conexion = Database::connect();
 ?>
