@@ -14,7 +14,7 @@ $categorias = $categoria->getAll();
 <head>
     <meta charset="UTF-8">
     <title>Crear Producto</title>
-    <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="stylesheet" href="../../../assets/css/styles.css">
 </head>
 <body>
     <h1>Crear Nuevo Producto</h1>
