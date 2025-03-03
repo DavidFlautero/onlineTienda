@@ -1,7 +1,7 @@
 <?php
 // models/Producto.php
 
-require_once __DIR__ . '/../config/db.php';
+require_once __DIR__ . '/../config/db.php'; // Incluir la conexión a la base de datos
 
 class Producto {
     private $id_producto;
@@ -13,46 +13,131 @@ class Producto {
     private $oferta_producto;
     private $fecha_producto;
     private $imagen_producto;
-    private $destacado;
     private $db;
 
+    // Constructor: establece la conexión a la base de datos
     public function __construct() {
         $this->db = Database::connect();
     }
 
     // Getters y Setters
-    public function setId_categoria($id_categoria) { $this->id_categoria = intval($id_categoria); }
-    public function setNombre_producto($nombre_producto) { $this->nombre_producto = trim($nombre_producto); }
-    public function setDescripcion_producto($descripcion_producto) { $this->descripcion_producto = trim($descripcion_producto); }
-    public function setPrecio_producto($precio_producto) { $this->precio_producto = floatval($precio_producto); }
-    public function setStock_producto($stock_producto) { $this->stock_producto = intval($stock_producto); }
-    public function setOferta_producto($oferta_producto) { $this->oferta_producto = ($oferta_producto === 'si' || $oferta_producto === 'no') ? $oferta_producto : 'no'; }
-    public function setImagen_producto($imagen_producto) { $this->imagen_producto = trim($imagen_producto); }
-    public function setDestacado($destacado) { $this->destacado = intval($destacado); }
+    public function getId_producto() {
+        return $this->id_producto;
+    }
 
+    public function getId_categoria() {
+        return $this->id_categoria;
+    }
+
+    public function getNombre_producto() {
+        return $this->nombre_producto;
+    }
+
+    public function getDescripcion_producto() {
+        return $this->descripcion_producto;
+    }
+
+    public function getPrecio_producto() {
+        return $this->precio_producto;
+    }
+
+    public function getStock_producto() {
+        return $this->stock_producto;
+    }
+
+    public function getOferta_producto() {
+        return $this->oferta_producto;
+    }
+
+    public function getFecha_producto() {
+        return $this->fecha_producto;
+    }
+
+    public function getImagen_producto() {
+        return $this->imagen_producto;
+    }
+
+    public function setId_producto($id_producto) {
+        $this->id_producto = $this->db->real_escape_string($id_producto);
+    }
+
+    public function setId_categoria($id_categoria) {
+        $this->id_categoria = $this->db->real_escape_string($id_categoria);
+    }
+
+    public function setNombre_producto($nombre_producto) {
+        $this->nombre_producto = $this->db->real_escape_string($nombre_producto);
+    }
+
+    public function setDescripcion_producto($descripcion_producto) {
+        $this->descripcion_producto = $this->db->real_escape_string($descripcion_producto);
+    }
+
+    public function setPrecio_producto($precio_producto) {
+        $this->precio_producto = $this->db->real_escape_string($precio_producto);
+    }
+
+    public function setStock_producto($stock_producto) {
+        $this->stock_producto = $this->db->real_escape_string($stock_producto);
+    }
+
+    public function setOferta_producto($oferta_producto) {
+        $this->oferta_producto = $this->db->real_escape_string($oferta_producto);
+    }
+
+    public function setFecha_producto($fecha_producto) {
+        $this->fecha_producto = $this->db->real_escape_string($fecha_producto);
+    }
+
+    public function setImagen_producto($imagen_producto) {
+        $this->imagen_producto = $this->db->real_escape_string($imagen_producto);
+    }
+
+    // Guardar un nuevo producto
     public function save() {
-        if (empty($this->id_categoria) || empty($this->nombre_producto) || empty($this->precio_producto) || empty($this->stock_producto)) {
+        // Validar datos antes de guardar
+        if (empty($this->getId_categoria()) || empty($this->getNombre_producto()) || empty($this->getPrecio_producto())) {
             die("Error: Faltan datos obligatorios.");
         }
 
-        $stmt = $this->db->prepare("
-            INSERT INTO tbl_productos (id_categoria, nombre_producto, descripcion_producto, precio_producto, stock_producto, oferta_producto, fecha_producto, imagen_producto, destacado)
-            VALUES (?, ?, ?, ?, ?, ?, CURDATE(), ?, ?)
-        ");
-        $stmt->bind_param("issdissi", $this->id_categoria, $this->nombre_producto, $this->descripcion_producto, $this->precio_producto, $this->stock_producto, $this->oferta_producto, $this->imagen_producto, $this->destacado);
+        // Preparar la consulta SQL
+        $sql = "INSERT INTO tbl_productos (
+                    id_categoria, 
+                    nombre_producto, 
+                    descripcion_producto, 
+                    precio_producto, 
+                    stock_producto, 
+                    oferta_producto, 
+                    fecha_producto, 
+                    imagen_producto
+                ) VALUES (
+                    {$this->getId_categoria()}, 
+                    '{$this->getNombre_producto()}', 
+                    '{$this->getDescripcion_producto()}', 
+                    {$this->getPrecio_producto()}, 
+                    {$this->getStock_producto()}, 
+                    '{$this->getOferta_producto()}', 
+                    CURDATE(), 
+                    '{$this->getImagen_producto()}'
+                );";
 
-        if ($stmt->execute()) {
+        // Ejecutar la consulta
+        $save = $this->db->query($sql);
+
+        // Verificar si la consulta fue exitosa
+        if ($save) {
             return true;
         } else {
-            die("Error al guardar el producto: " . $stmt->error);
+            // Mostrar el error de la consulta
+            die("Error al guardar el producto: " . $this->db->error);
         }
     }
 
+    // Obtener todos los productos
     public function getAll() {
-        $result = $this->db->query("SELECT * FROM tbl_productos ORDER BY id_producto DESC");
-        return $result->fetch_all(MYSQLI_ASSOC);
+        $sql = "SELECT * FROM tbl_productos ORDER BY id_producto DESC;";
+        $productos = $this->db->query($sql);
+        return $productos->fetch_all(MYSQLI_ASSOC);
     }
 }
 ?>
-
-

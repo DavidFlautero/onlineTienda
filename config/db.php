@@ -1,23 +1,20 @@
 <?php
 // config/db.php
 
-class Database {
-    private static $instance = null;
-    private $connection;
-
-    private function __construct() {
-        $this->connection = new mysqli('localhost', 'root', '', 'tienda_freelancer');
-        if ($this->connection->connect_error) {
-            die("Error de conexión: " . $this->connection->connect_error);
+// Verifica si la clase ya está definida
+if (!class_exists('Database')) {
+    class Database {
+        public static function connect() {
+            $db = new mysqli('localhost', 'root', '', 'tienda_freelancer');
+            if ($db->connect_error) {
+                die("Error de conexión: " . $db->connect_error);
+            }
+            $db->query("SET NAMES 'utf8'");
+            return $db;
         }
-        $this->connection->set_charset("utf8mb4");
-    }
-
-    public static function connect() {
-        if (self::$instance == null) {
-            self::$instance = new Database();
-        }
-        return self::$instance->connection;
     }
 }
+
+// Crear una instancia de la conexión
+$conexion = Database::connect();
 ?>
