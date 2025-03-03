@@ -27,10 +27,10 @@ session_start(); // Inicia la sesión si no está iniciada
         <nav>
             <ul>
                 <li><a href="index.php">Inicio</a></li>
-                <li><a href="pages/productos.php">Productos</a></li>
-                <li><a href="pages/login.php">Iniciar Sesión</a></li>
+                <li><a href="views/productos.php">Productos</a></li>
+                <li><a href="views/login.php">Iniciar Sesión</a></li>
                 <li>
-                    <a href="pages/carrito.php">
+                    <a href="views/carrito.php">
                         <i class="fas fa-shopping-cart"></i> Carrito
                         <span id="carrito-count">0</span>
                     </a>

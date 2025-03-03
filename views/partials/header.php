@@ -26,9 +26,9 @@
         <nav>
             <ul>
                 <li><a href="../index.php">Inicio</a></li>
-                <li><a href="../pages/productos.php">Productos</a></li>
-                <li><a href="../pages/login.php">Iniciar Sesión</a></li>
-                <li><a href="../pages/carrito.php"><i class="fas fa-shopping-cart"></i> Carrito</a></li>
+                <li><a href="productos.php">Productos</a></li>
+                <li><a href="login.php">Iniciar Sesión</a></li>
+                <li><a href="carrito.php"><i class="fas fa-shopping-cart"></i> Carrito</a></li>
             </ul>
         </nav>
     </header>
