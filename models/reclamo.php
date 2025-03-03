@@ -1,39 +1,27 @@
 <?php
+require_once __DIR__ . '../../config/db.php'; // Ajusta la ruta según la ubicación de db.php
+
 class Reclamo {
-    private $id_reclamo;
-    private $id_pedido;
-    private $id_producto;
-    private $id_usuario;
-    private $descripcion;
-    private $imagen;
-    private $video;
-    private $estado;
-    private $fecha;
+    private $db;
 
-    // Getters y Setters
-    // ...
-
-    // Método para guardar un reclamo
-    public function save() {
-        $sql = "INSERT INTO reclamos VALUES (NULL, {$this->id_pedido}, {$this->id_producto}, {$this->id_usuario}, '{$this->descripcion}', '{$this->imagen}', '{$this->video}', 'pendiente', CURDATE());";
-        return Database::execute($sql);
+    public function __construct() {
+        $this->db = DataBase::connect(); // Obtiene la conexión a la base de datos
     }
 
-    // Método para obtener todos los reclamos
     public function getAll() {
-        $sql = "SELECT * FROM reclamos ORDER BY fecha DESC;";
-        return Database::query($sql);
-    }
+        $query = "SELECT * FROM tbl_reclamos"; // Ajusta el nombre de la tabla si es necesario
+        $result = $this->db->query($query); // Ejecuta la consulta
 
-    // Método para obtener reclamos de un usuario
-    public function getReclamosByUser() {
-        $sql = "SELECT * FROM reclamos WHERE id_usuario = {$this->id_usuario} ORDER BY fecha DESC;";
-        return Database::query($sql);
-    }
+        if (!$result) {
+            die("Error en la consulta: " . $this->db->error); // Manejo de errores
+        }
 
-    // Método para gestionar un reclamo (aprobado/rechazado)
-    public function gestionar() {
-        $sql = "UPDATE reclamos SET estado = '{$this->estado}' WHERE id_reclamo = {$this->id_reclamo};";
-        return Database::execute($sql);
+        $reclamos = [];
+        while ($row = $result->fetch_assoc()) {
+            $reclamos[] = $row; // Almacena cada fila en un array
+        }
+
+        return $reclamos; // Retorna los resultados como un array asociativo
     }
 }
+?>
