@@ -78,6 +78,6 @@
 
     <!-- Derechos Reservados -->
     <div class="footer-bottom" ALIGN="CENTER">
-        <p>© 2019-2025 Todos los derechos reservados │ Portal Mayorista es una marca registrada</p>
+        <p>© 2025 Todos los derechos reservados │ Mayorisander es una marca registrada</p>
     </div>
 </footer>

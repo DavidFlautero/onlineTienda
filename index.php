@@ -21,7 +21,7 @@ session_start(); // Inicia la seinclude "./views/search.php"
     <div class="top-bar">
         <!-- Íconos de redes sociales (izquierda) -->
         <div class="social-icons">
-            <a href="https://www.instagram.com/tu_perfil" target="_blank">
+            <a href="https://www.instagram.com/mayorisander/" target="_blank">
                 <i class="fab fa-instagram"></i>
             </a>
             <a href="https://wa.me/tu_numero" target="_blank">
@@ -48,10 +48,10 @@ session_start(); // Inicia la seinclude "./views/search.php"
 
         <!-- Correo y ubicación (derecha) -->
         <div class="contact-info">
-            <a href="mailto:info@tutienda.com">
+            <a href="mailto:alexandervillamil1987@gmail.com">
                 <i class="fas fa-envelope"></i>
             </a>
-            <a href="https://maps.google.com/?q=tu_dirección" target="_blank">
+            <a href="https://maps.google.com/?q=URIBURU 754" target="_blank">
                 <i class="fas fa-map-marker-alt"></i>
             </a>
         </div>
