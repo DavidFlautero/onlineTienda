@@ -1,5 +1,5 @@
 <?php
-session_start(); // Inicia la sesión si no está iniciada
+session_start(); // Inicia la seinclude "./views/search.php"
 ?>
 
 <!DOCTYPE html>
@@ -13,7 +13,9 @@ session_start(); // Inicia la sesión si no está iniciada
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+    <script src="./assets/js/script.js"></script>
 </head>
+
 <body>
     <!-- Barra superior -->
     <div class="top-bar">
