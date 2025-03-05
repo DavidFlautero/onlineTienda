@@ -270,3 +270,64 @@ th {
 .producto button:hover {
     background-color: #218838;
 }
+/* Barra superior */
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f8f9fa;
+    padding: 10px 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.social-icons, .contact-info {
+    display: flex;
+    gap: 15px;
+}
+
+.social-icons a, .contact-info a {
+    color: #333;
+    font-size: 18px;
+    text-decoration: none;
+}
+
+.message-bar {
+    flex-grow: 1;
+    margin: 0 20px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.messages {
+    display: inline-block;
+    padding-left: 100%;
+    animation: slide 20s linear infinite;
+}
+
+.messages p {
+    display: inline-block;
+    margin: 0 20px;
+    font-size: 14px;
+    color: #333;
+}
+
+@keyframes slide {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .top-bar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .message-bar {
+        margin: 10px 0;
+    }
+}

@@ -38,40 +38,66 @@ header nav ul li a:hover {
     color: #007bff;
 }
 
-/* Barra de búsqueda */
+/* Buscador */
 .search-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+    max-width: 600px;
     position: relative;
+}
+
+.search-bar form {
+    display: flex;
     width: 100%;
-    max-width: 500px;
-    margin: 0 auto;
-    padding: 10px;
 }
 
 #search-input {
     width: 100%;
-    padding: 10px;
+    padding: 10px 15px;
     font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    border: 1px solid #ddd;
+    border-radius: 25px 0 0 25px;
+    outline: none;
 }
 
-#search-results {
+.search-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 0 25px 25px 0;
+    cursor: pointer;
+    color: #fff;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.search-button:hover {
+    background-color: #0056b3;
+}
+
+.search-results {
     position: absolute;
+    top: 100%;
+    left: 0;
     width: 100%;
     background-color: #fff;
-    border: 1px solid #ccc;
+    border: 1px solid #ddd;
     border-top: none;
     border-radius: 0 0 5px 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     z-index: 1000;
+    display: none; /* Oculto por defecto */
 }
 
-#search-results div {
+.search-results div {
     padding: 10px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-#search-results div:hover {
+.search-results div:hover {
     background-color: #f1f1f1;
 }
 
@@ -179,6 +205,7 @@ header nav ul li a:hover {
 .cerrar-slider:hover {
     color: #000;
 }
+
 /* Contenedor del slider */
 .slider-container {
     max-width: 1200px; /* Ancho máximo del slider */
@@ -302,6 +329,7 @@ header nav ul li a:hover {
 .btn-ver-carrito:hover {
     background-color: #0056b3;
 }
+
 .services-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -336,6 +364,7 @@ header nav ul li a:hover {
 .service-item a:hover {
     text-decoration: underline;
 }
+
 footer {
     background-color: #1A2A3A;
     color: #fff;
@@ -439,4 +468,120 @@ footer {
 .cantidad-control span {
     font-size: 1rem;
     font-weight: bold;
+}
+
+/* ------------------------------------ */
+/* Barra superior */
+/* ------------------------------------ */
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Centra verticalmente todo */
+    background-color: #ffffff; /* Fondo blanco */
+    padding: 0 40px; /* Padding horizontal (sin padding vertical) */
+    border-bottom: 1px solid #e0e0e0; /* Borde inferior más suave */
+    font-family: 'Roboto', sans-serif;
+    height: 80px; /* Altura fija para la barra superior */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Sombra suave */
+}
+
+/* Íconos de redes sociales (izquierda) */
+.social-icons {
+    display: flex;
+    gap: 20px; /* Más espacio entre íconos */
+    align-items: center; /* Centra verticalmente los íconos */
+    height: 100%; /* Ocupa toda la altura de la barra superior */
+}
+
+.social-icons a {
+    color: #555; /* Color de los íconos más suave */
+    font-size: 22px; /* Tamaño de íconos más profesional */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+    color: #007bff; /* Color al hacer hover */
+}
+
+/* Mensaje deslizante (centro) */
+.message-bar {
+    flex-grow: 1;
+    margin: 0 40px; /* Más margen a los lados */
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+    max-width: 60%; /* Ajusta el ancho del contenedor del mensaje */
+    display: flex;
+    align-items: center; /* Centra verticalmente el mensaje */
+    height: 100%; /* Ocupa toda la altura de la barra superior */
+}
+
+.messages {
+    display: inline-block;
+    padding-left: 100%;
+    animation: slide 30s linear infinite; /* Ajusta la velocidad aquí (30s) */
+}
+
+.messages p {
+    display: inline-block;
+    margin: 0 40px; /* Más espacio entre mensajes */
+    font-size: 16px; /* Tamaño de fuente más profesional */
+    color: #444; /* Color de texto más suave */
+    font-weight: 500; /* Grosor de la fuente (semi-bold) */
+    letter-spacing: 0.5px; /* Espaciado entre letras */
+}
+
+/* Animación del mensaje deslizante */
+@keyframes slide {
+    0% {
+        transform: translateX(0); /* Comienza visible */
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+/* Correo y ubicación (derecha) */
+.contact-info {
+    display: flex;
+    gap: 20px; /* Más espacio entre íconos */
+    align-items: center; /* Centra verticalmente los íconos */
+    height: 100%; /* Ocupa toda la altura de la barra superior */
+}
+
+.contact-info a {
+    color: #555; /* Color de los íconos más suave */
+    font-size: 22px; /* Tamaño de íconos más profesional */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.contact-info a:hover {
+    color: #007bff; /* Color al hacer hover */
+}
+
+/* ------------------------------------ */
+/* Responsive */
+/* ------------------------------------ */
+@media (max-width: 768px) {
+    .top-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 15px; /* Padding reducido en móviles */
+        height: auto; /* Altura automática en móviles */
+    }
+
+    .message-bar {
+        margin: 10px 0;
+        max-width: 100%; /* Ancho completo en móviles */
+    }
+
+    .social-icons, .contact-info {
+        gap: 10px; /* Menos espacio entre íconos en móviles */
+    }
+
+    .messages p {
+        font-size: 14px; /* Tamaño de fuente más pequeño en móviles */
+    }
 }

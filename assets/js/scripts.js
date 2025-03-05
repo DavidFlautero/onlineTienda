@@ -120,4 +120,54 @@ $(document).ready(function () {
 
     // Actualiza el contador del carrito al cargar la página
     actualizarContadorCarrito();
-});
+    document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.getElementById("search-input");
+        const searchResults = document.getElementById("search-results");
+    
+        searchInput.addEventListener("input", function () {
+            const query = this.value.trim();
+            console.log("Query:", query); // Depuración: verifica el valor del input
+    
+            if (query.length > 2) { // Solo busca si hay más de 2 caracteres
+                fetch(`search.php?query=${encodeURIComponent(query)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log("Data:", data); // Depuración: verifica la respuesta del servidor
+                        searchResults.innerHTML = ""; // Limpiar resultados anteriores
+    
+                        if (data.length > 0) {
+                            data.forEach(item => {
+                                const resultItem = document.createElement("div");
+                                resultItem.textContent = item.nombre_producto; // Usa "nombre_producto"
+                                resultItem.style.padding = "10px"; // Estilo para los resultados
+                                resultItem.style.cursor = "pointer"; // Cambia el cursor al pasar sobre el resultado
+                                resultItem.style.borderBottom = "1px solid #ddd"; // Separador entre resultados
+    
+                                // Al hacer clic en un resultado, llena el campo de búsqueda y oculta los resultados
+                                resultItem.addEventListener("click", () => {
+                                    searchInput.value = item.nombre_producto; // Llena el campo con el nombre del producto
+                                    searchResults.style.display = "none"; // Oculta los resultados
+                                });
+    
+                                searchResults.appendChild(resultItem); // Agrega el resultado al contenedor
+                            });
+    
+                            searchResults.style.display = "block"; // Muestra los resultados
+                        } else {
+                            searchResults.style.display = "none"; // Oculta si no hay resultados
+                        }
+                    })
+                    .catch(error => console.error("Error:", error)); // Captura errores de fetch
+            } else {
+                searchResults.style.display = "none"; // Oculta si la consulta es muy corta
+            }
+        });
+    
+        // Ocultar resultados al hacer clic fuera del buscador
+        document.addEventListener("click", function (e) {
+            if (!searchResults.contains(e.target) && e.target !== searchInput) {
+                searchResults.style.display = "none";
+            }
+        });
+    });
+})
