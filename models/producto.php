@@ -13,6 +13,7 @@ class Producto {
     private $fecha_producto;
     private $imagen_producto;
     private $destacado;
+    private $estado; // Nuevo campo
     private $db;
 
     // Constructor: establece la conexión a la base de datos
@@ -104,6 +105,15 @@ class Producto {
         $this->destacado = $this->db->real_escape_string($destacado);
     }
 
+    // Getter y Setter para el estado
+    public function getEstado() {
+        return $this->estado;
+    }
+
+    public function setEstado($estado) {
+        $this->estado = $this->db->real_escape_string($estado);
+    }
+
     // Guardar un nuevo producto
     public function save() {
         // Validar datos antes de guardar
@@ -129,7 +139,8 @@ class Producto {
                     oferta_producto, 
                     fecha_producto, 
                     imagen_producto,
-                    destacado
+                    destacado,
+                    estado
                 ) VALUES (
                     {$this->getId_categoria()}, 
                     '{$this->getNombre_producto()}', 
@@ -139,7 +150,8 @@ class Producto {
                     '{$this->getOferta_producto()}', 
                     CURDATE(), 
                     '{$this->getImagen_producto()}',
-                    {$this->getDestacado()}
+                    {$this->getDestacado()},
+                    'active' -- Estado por defecto
                 );";
 
         // Ejecutar la consulta
@@ -153,9 +165,30 @@ class Producto {
         }
     }
 
+    // Cambiar el estado del producto (activo/pausado)
+    public function toggleEstado($id_producto) {
+        $sql = "UPDATE tbl_productos SET estado = IF(estado = 'active', 'paused', 'active') WHERE id_producto = $id_producto;";
+        return $this->db->query($sql);
+    }
+
+    // Eliminar producto
+    public function delete() {
+        $sql = "DELETE FROM tbl_productos WHERE id_producto = {$this->id_producto};";
+        $delete = $this->db->query($sql);
+    
+        if ($delete) {
+            return true;
+        } else {
+            die("Error al eliminar el producto: " . $this->db->error);
+        }
+    }
+
     // Obtener todos los productos
     public function getAll() {
-        $sql = "SELECT * FROM tbl_productos ORDER BY id_producto DESC;";
+        $sql = "SELECT p.*, c.nombre_categoria 
+                FROM tbl_productos p
+                INNER JOIN tbl_categorias c ON p.id_categoria = c.id_categoria
+                ORDER BY p.id_producto DESC;";
         $productos = $this->db->query($sql);
         return $productos->fetch_all(MYSQLI_ASSOC);
     }
@@ -166,5 +199,56 @@ class Producto {
             $this->db->close();
         }
     }
+
+    // Editar un producto existente
+    public function edit() {
+    // Validar datos antes de editar
+    if (empty($this->getId_producto()) || empty($this->getId_categoria()) || empty($this->getNombre_producto()) || empty($this->getPrecio_producto())) {
+        die("Error: Faltan datos obligatorios.");
+    }
+
+    // Validar tipos de datos
+    if (!is_numeric($this->getPrecio_producto()) || $this->getPrecio_producto() <= 0) {
+        die("Error: El precio debe ser un número positivo.");
+    }
+    if (!is_numeric($this->getStock_producto()) || $this->getStock_producto() < 0) {
+        die("Error: El stock debe ser un número positivo o cero.");
+    }
+
+    // Preparar la consulta SQL para actualizar el producto
+    $sql = "UPDATE tbl_productos SET 
+                id_categoria = {$this->getId_categoria()},
+                nombre_producto = '{$this->getNombre_producto()}',
+                descripcion_producto = '{$this->getDescripcion_producto()}',
+                precio_producto = {$this->getPrecio_producto()},
+                stock_producto = {$this->getStock_producto()},
+                oferta_producto = '{$this->getOferta_producto()}',
+                fecha_producto = CURDATE(),
+                imagen_producto = '{$this->getImagen_producto()}',
+                destacado = {$this->getDestacado()},
+                estado = '{$this->getEstado()}'
+            WHERE id_producto = {$this->getId_producto()};";
+
+    // Ejecutar la consulta
+    $update = $this->db->query($sql);
+
+    // Verificar si la consulta fue exitosa
+    if ($update) {
+        return true;
+    } else {
+        die("Error al editar el producto: " . $this->db->error);
+    }
+}
+public function countProductosActivos() {
+    $sql = "SELECT COUNT(*) as total FROM tbl_productos WHERE estado = 'active';";
+    $result = $this->db->query($sql);
+
+    if ($result) {
+        $row = $result->fetch_assoc();
+        return $row['total']; // Retorna el número de productos activos
+    } else {
+        die("Error al contar los productos activos: " . $this->db->error);
+    }
+}
 }
 ?>
