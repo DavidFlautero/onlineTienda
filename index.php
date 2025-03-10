@@ -1,5 +1,5 @@
 <?php
-session_start(); // Inicia la seinclude "./views/search.php"
+session_start(); // Inicia la sesión
 ?>
 
 <!DOCTYPE html>
@@ -63,18 +63,17 @@ session_start(); // Inicia la seinclude "./views/search.php"
             <img src="assets/images/logo.png" alt="Logo de Mayorisander">
         </div>
         <div class="search-bar">
-        <form action="./config/search.php" method="GET">
-        <input type="text" id="search-input" name="query" placeholder="Buscar producto..." autocomplete="off">
-        <button type="submit" class="search-button">
-        <i class="fas fa-search"></i> <!-- Ícono de lupa -->
-        </button>
-        <div id="search-results" class="search-results"></div> <!-- Resultados de autocompletado -->
-    </form>
-</div>
+            <form action="./config/search.php" method="GET">
+                <input type="text" id="search-input" name="query" placeholder="Buscar producto..." autocomplete="off">
+                <button type="submit" class="search-button">
+                    <i class="fas fa-search"></i> <!-- Ícono de lupa -->
+                </button>
+                <div id="search-results" class="search-results"></div> <!-- Resultados de autocompletado -->
+            </form>
+        </div>
         <nav>
             <ul>
                 <li><a href="index.php">Inicio</a></li>
-                <li><a href="views/productos.php">Productos</a></li>
                 <li><a href="views/login.php">Iniciar Sesión</a></li>
                 <li>
                     <a href="views/carrito.php">
@@ -84,8 +83,96 @@ session_start(); // Inicia la seinclude "./views/search.php"
                 </li>
             </ul>
         </nav>
+        
     </header>
-
+    <!-- Sección de Categorías se han organizado segun estadisticas para que muestre lo mas vendido de primeras-->
+<section class="categorias-homecenter">
+    <div class="lista-categorias">
+        <!-- Categoría 1: Bazar y Hogar -->
+        <div class="categoria">
+            <h3>Bazar y Hogar</h3>
+            <div class="subcategorias">
+                <a href="#">Blanquería</a>
+                <a href="#">Herramientas, grifería y balanzas</a>
+                <a href="#">Luces, lámparas, focos y cámaras</a>
+                <a href="#">Relojes y espejos</a>
+            </div>
+        </div>
+        <!-- Categoría 2: Accesorios -->
+        <div class="categoria">
+            <h3>Accesorios</h3>
+            <div class="subcategorias">
+                <a href="#">Accesorios para auto, moto y bici</a>
+                <a href="#">Accesorios para celular</a>
+                <a href="#">Accesorios para PC y TV</a>
+                <a href="#">Auriculares</a>
+                <a href="#">Cables</a>
+                <a href="#">Cargadores</a>
+                <a href="#">Parlantes</a>
+                <a href="#">Billeteras, mochilas y bolsos</a>
+            </div>
+        </div>
+        <!-- Categoría 3: Belleza y Cuidado Personal -->
+        <div class="categoria">
+            <h3>Belleza y Cuidado Personal</h3>
+            <div class="subcategorias">
+                <a href="#">Cabello</a>
+                <a href="#">Cuidado facial y personal</a>
+                <a href="#">Corrector y contorno</a>
+                <a href="#">Iluminador y primer</a>
+                <a href="#">Brochas y pinceles</a>
+                <a href="#">Labios</a>
+                <a href="#">Ojos</a>
+                <a href="#">Polvos y bases</a>
+                <a href="#">Rubores</a>
+                <a href="#">Sombras</a>
+                <a href="#">Uñas</a>
+                <a href="#">Perfumes</a>
+            </div>
+        </div>
+        <!-- Categoría 4: Fitness y Bienestar -->
+        <div class="categoria">
+            <h3>Fitness y Bienestar</h3>
+            <div class="subcategorias">
+                <a href="#">Fitness, masajeadores y más</a>
+                <a href="#">Defensa personal y supervivencia</a>
+            </div>
+        </div>
+        <!-- Categoría 5: Juegos -->
+        <div class="categoria">
+            <h3>Juegos</h3>
+            <div class="subcategorias">
+                <a href="#">Videojuegos</a>
+                <a href="#">Juegos de mesa</a>
+            </div>
+        </div>
+        <!-- Categoría 6: Envíos -->
+        <div class="categoria">
+            <h3>Envíos</h3>
+            <div class="subcategorias">
+                <a href="#">Envíos nacionales</a>
+                <a href="#">Envíos internacionales</a>
+            </div>
+        </div>
+        <!-- Categoría 7: Útiles -->
+        <div class="categoria">
+            <h3>Útiles</h3>
+            <div class="subcategorias">
+                <a href="#">Útiles de oficina</a>
+                <a href="#">Útiles escolares</a>
+            </div>
+        </div>
+        <!-- Categoría 8: Temporadas -->
+        <div class="categoria">
+            <h3>Temporadas</h3>
+            <div class="subcategorias">
+                <a href="#">Verano</a>
+                <a href="#">Otoño Invierno</a>
+                <a href="#">Navidad</a>
+            </div>
+        </div>
+    </div>
+</section>
     <!-- Resto de tu contenido -->
     <!-- Slider -->
     <div class="slider-container">

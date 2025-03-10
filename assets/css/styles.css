@@ -39,6 +39,7 @@ header nav ul li a:hover {
 }
 
 /* Barra de búsqueda */
+/* Barra de búsqueda */
 .search-bar {
     position: relative;
     width: 100%;
@@ -49,10 +50,28 @@ header nav ul li a:hover {
 
 #search-input {
     width: 100%;
-    padding: 10px;
+    padding: 10px 40px 10px 10px; /* Añade espacio a la derecha para la lupa */
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    box-sizing: border-box; /* Asegura que el padding no afecte el ancho total */
+}
+
+.search-bar button {
+    position: absolute;
+    right: 20px; /* Ajusta la posición de la lupa */
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    color: #333;
+    padding: 0; /* Elimina el padding innecesario */
+}
+
+.search-bar button:hover {
+    color: #007bff;
 }
 
 #search-results {
@@ -64,6 +83,7 @@ header nav ul li a:hover {
     border-radius: 0 0 5px 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     z-index: 1000;
+    display: none; /* Asegura que los resultados estén ocultos por defecto */
 }
 
 #search-results div {
@@ -74,6 +94,77 @@ header nav ul li a:hover {
 #search-results div:hover {
     background-color: #f1f1f1;
 }
+/* ------------------------------------ */
+/* Estilos para las categorías (Homecenter) */
+/* ------------------------------------ */
+.categorias-homecenter {
+    background-color: #f8f9fa; /* Fondo gris claro */
+    padding: 10px 0;
+    border-bottom: 1px solid #e0e0e0; /* Borde inferior */
+    position: relative;
+    z-index: 10; /* Asegura que esté encima del slider */
+}
+
+.lista-categorias {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.categoria {
+    position: relative;
+}
+
+.categoria h3 {
+    font-size: 1rem;
+    color: #333;
+    cursor: pointer;
+    padding: 10px;
+    margin: 0;
+    transition: color 0.3s ease;
+}
+
+.categoria h3:hover {
+    color: #007bff; /* Color azul al hacer hover */
+}
+
+/* Subcategorías (ocultas por defecto) */
+.subcategorias {
+    display: none; /* Oculto inicialmente */
+    position: absolute;
+    top: 100%; /* Posición debajo del título */
+    left: 0;
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000; /* Asegura que esté encima de todo */
+    min-width: 200px;
+    padding: 10px;
+}
+
+/* Mostrar subcategorías al hacer hover */
+.categoria:hover .subcategorias {
+    display: block;
+}
+
+.subcategorias a {
+    display: block;
+    text-decoration: none;
+    color: #555;
+    font-size: 0.9rem;
+    padding: 8px 10px;
+    transition: background-color 0.3s ease;
+}
+
+.subcategorias a:hover {
+    background-color: #f8f9fa; /* Fondo gris claro al hacer hover */
+    color: #007bff; /* Color azul al hacer hover */
+}
+
 
 /* Slider */
 .slider {
@@ -179,6 +270,7 @@ header nav ul li a:hover {
 .cerrar-slider:hover {
     color: #000;
 }
+
 /* Contenedor del slider */
 .slider-container {
     max-width: 1200px; /* Ancho máximo del slider */
@@ -302,6 +394,7 @@ header nav ul li a:hover {
 .btn-ver-carrito:hover {
     background-color: #0056b3;
 }
+
 .services-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -336,6 +429,7 @@ header nav ul li a:hover {
 .service-item a:hover {
     text-decoration: underline;
 }
+
 footer {
     background-color: #1A2A3A;
     color: #fff;
